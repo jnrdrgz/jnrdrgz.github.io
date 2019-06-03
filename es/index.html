@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Juan Rodríguez - Personal Website</title>
+	<meta charset="utf-8">
+	<style>
+		.left {
+ 			float:left;
+			margin:0;
+			padding:0
+		}
+		.right {
+ 			float:right;
+ 			margin:0;
+ 			padding:0
+		}
+
+		html, body {
+			margin: 0;
+   			height:100%;
+   			width:100%;
+    		padding:0;
+    		scroll-behavior: smooth;
+			font-family: sans-serif;
+		}
+
+		header {
+			padding:10px 15px;
+ 			font-size:250%;
+			background-color: #ffb366;
+		}
+
+		footer {
+			padding:5px 15px;
+ 			font-size:110%;
+ 			position:absolute;
+ 			right:0;
+			bottom:0;
+			left:0;
+			background-color: #ffb350;
+		}
+
+		menu {
+			font-size:150%;
+			margin: 0;
+			background-color: #ffb366;
+		}
+
+		menu a {
+			padding:2px 1ex;
+			color: #000000;
+ 			font-size:120%;
+ 			text-decoration:none;
+ 			
+		}
+		menu a:hover {
+  			background-color: #e67300;
+		}
+
+
+		body {
+			background-color: #ffcc99
+		}
+
+		main {
+			padding:10px;
+			font-size:185%;
+		}
+
+		/** Code for hover info **/
+
+		dfn {
+		  /*background: #e9e9e9;*/
+		  border-bottom: dashed 1px rgba(0,0,0,0.8);
+		  padding: 0 0.4em;
+		  cursor: help;
+		  font-style: normal;
+		  position: relative;
+		  
+		}
+		dfn::after {
+		  content: attr(data-info);
+		  display: inline;
+		  position: absolute;
+		  top: 22px; left: 0;
+		  opacity: 0;
+		  width: 230px;
+		  font-size: 13px;
+		  font-weight: 700;
+		  line-height: 1.5em;
+		  padding: 0.5em 0.8em;
+		  background: rgba(0,0,0,0.8);
+		  color: #fff;
+		  pointer-events: none; /* This prevents the box from apearing when hovered. */
+		  transition: opacity 250ms, top 250ms;
+		}
+		dfn::before {
+		  content: '';
+		  display: block;
+		  position: absolute;
+		  top: 12px; left: 20px;
+		  opacity: 0;
+		  width: 0; height: 0;
+		  border: solid transparent 5px;
+		  border-bottom-color: rgba(0,0,0,0.8);
+		  transition: opacity 250ms, top 250ms;
+		}
+		dfn:hover {z-index: 2;} /* Keeps the info boxes on top of other elements */
+		dfn:hover::after,
+		dfn:hover::before {opacity: 1;}
+		dfn:hover::after {top: 30px;}
+		dfn:hover::before {top: 20px;}
+
+		section {
+    		height:100vh;
+    		width: 100vw;
+		}
+
+		#cv {
+			font-size:75%;
+		}
+
+		#mainlang {
+			font-size:105%;
+		}
+
+		#secondlang {
+			font-size:60%;
+		}
+
+		#maintext
+		{
+		  height: 96vh;
+		  width: 96vw;
+		  top: 0;
+		  left: 0;
+		  text-overflow: "-";
+		}
+	</style>
+	<!--background-color: #e67300 -->
+</head>
+<body>
+<header><strong>Juan Rodríguez</strong><small>  juanrodriguez.xyz</small></header>
+
+<menu>
+<a id="now" href="#about">Sobre mi</a>
+<a href="#contact">Contactame!</a>
+<a href="#cv">CV</a>
+<span class="right"><a href="../index.html">English</a></span>
+<span class="right"><a href="index.html">Español</a></span>
+</menu>
+
+<main>
+<section id="index">
+	<h1>Bienvenido!</h1>
+	<p>Hola, me llamo Juan Rodriguez y esta es mi página personal :D</p>
+</section>
+
+<section id="about">
+	<h1>Sobre mi</h1>
+	<div id="maintext">
+	<p>Soy un programador de 21 años, actualmente vivo en San Miguel de Tucumán. Se <a href="#mainlang">algo</a> de C++ and Python (pero si queres podes contratarme para que aprenda lo que sea, no tengo ningun problema). Me gusta mucho la programacion de videojuegos y la infosec.  Si queres ver algo de lo que programé ingresa a mi <a href="https://github.com/jnrdrgz">Github</a>, si querés contratarme <a href="contact.html">contactame</a> o ingresa a mi <a href="https://www.linkedin.com/in/juan-ignacio-rodriguez-707644178/"> LinkedIn</a>, también puedes ver mi <a href="#cv">Curriculum Vitae</a>.</p>
+	</div>
+</section>
+
+<section id="contact">
+<h1>Contacto</h1>
+
+Email: jnigrodriguez@gmail.com<br>
+Otros: 
+ <ul>
+  <li><img src="https://image.flaticon.com/icons/png/512/174/174857.png" width="30" height="30"><a href="https://www.linkedin.com/in/juan-ignacio-rodriguez-707644178/" style="text-decoration:none;">LinkedIn</a></li>
+  <li><img src="https://image.flaticon.com/icons/svg/25/25231.svg" width="30" height="30"><a href="https://github.com/jnrdrgz" style="text-decoration:none;">Github</a></li>
+</ul> 
+</section>
+
+<section id="cv">
+
+<span id="mainlang">
+<h1>Curriculum Vitae </h1>
+
+<p>Puedes descargar mi cv <a href="https://github.com/jnrdrgz">aquí<a></p>
+
+<h2>Más info</h2>
+<h3>Programación:</h3>
+
+<h4>Lenguajes:</h4>
+<p>(Pone el cursor sobre los ? para ver información más detallada sobre cuanto se cada lenguaje)</p>
+<p>C++ <dfn data-info="The sufficient knowledge to pick new libraries and work with them, you can check some little games that I made with SDL in my Github account"> ? </dfn> </p>
+<p>Python <dfn data-info="The sufficient knowledge to make tons and tons of day or two day projects (like web scrappers to stract small data that I needed in a particular moment, pseudo football simulators, basic encryptor/decryptor and some others). As in C++, I can easily pick up new python libraries and read Python code as well."> ? </dfn></p>
+</span>
+
+<span id="secondlang">
+<h4>Otros lenguajes:</h4>
+<p>C <dfn data-info="I used it after Python to learn another language I also made some simple games before I switched to C++."> ? </dfn></p>
+<p>HTML, CSS, Javascript <dfn data-info="The sufficient knowledge to make this webpage. Also I did some online javascript courses in the past."> ? </dfn> </p>
+<p>C# <dfn data-info="I used it for 1.5 years in university"> ? </dfn> </p>
+<p>Lua <dfn data-info="I used it for prototyping a couple of games with the LÖVE game library"> ? </dfn> </p>
+<p>SQL <dfn data-info="I understand all the basic statements and I have a pretty reasonable understanding of databases in general"> ? </dfn> </p>
+</span>
+
+<div id="maintext">
+<p>I have a very good grasp with OOP concepts and I'm now actively learning about OOP design patterns. I know the basics of version of control, I use git and github, but I never used them to work in a team</p>
+<p>I also know how to use Linux, I use Debian as my daily OS but I can also use Windows. To write my programs I use Sublime Text</p>
+</div>
+</section>
+
+
+</main>
+
+</body>
+</html>
