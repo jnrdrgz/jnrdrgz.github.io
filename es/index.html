@@ -2,148 +2,15 @@
 <html lang="en">
 <head>
 	<title>Juan Rodríguez - Personal Website</title>
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="../style.css">
 	<meta charset="utf-8">
-	<style>
-		.left {
- 			float:left;
-			margin:0;
-			padding:0
-		}
-		.right {
- 			float:right;
- 			margin:0;
- 			padding:0
-		}
-
-		html, body {
-			margin: 0;
-   			height:100%;
-   			width:100%;
-    		padding:0;
-    		scroll-behavior: smooth;
-			font-family: sans-serif;
-		}
-
-		header {
-			padding:10px 15px;
- 			font-size:250%;
-			background-color: #ffb366;
-		}
-
-		footer {
-			padding:5px 15px;
- 			font-size:110%;
- 			position:absolute;
- 			right:0;
-			bottom:0;
-			left:0;
-			background-color: #ffb350;
-		}
-
-		menu {
-			font-size:150%;
-			margin: 0;
-			background-color: #ffb366;
-		}
-
-		menu a {
-			padding:2px 1ex;
-			color: #000000;
- 			font-size:120%;
- 			text-decoration:none;
- 			
-		}
-		menu a:hover {
-  			background-color: #e67300;
-		}
-
-
-		body {
-			background-color: #ffcc99
-		}
-
-		main {
-			padding:10px;
-			font-size:185%;
-		}
-
-		/** Code for hover info **/
-
-		dfn {
-		  /*background: #e9e9e9;*/
-		  border-bottom: dashed 1px rgba(0,0,0,0.8);
-		  padding: 0 0.4em;
-		  cursor: help;
-		  font-style: normal;
-		  position: relative;
-		  
-		}
-		dfn::after {
-		  content: attr(data-info);
-		  display: inline;
-		  position: absolute;
-		  top: 22px; left: 0;
-		  opacity: 0;
-		  width: 230px;
-		  font-size: 13px;
-		  font-weight: 700;
-		  line-height: 1.5em;
-		  padding: 0.5em 0.8em;
-		  background: rgba(0,0,0,0.8);
-		  color: #fff;
-		  pointer-events: none; /* This prevents the box from apearing when hovered. */
-		  transition: opacity 250ms, top 250ms;
-		}
-		dfn::before {
-		  content: '';
-		  display: block;
-		  position: absolute;
-		  top: 12px; left: 20px;
-		  opacity: 0;
-		  width: 0; height: 0;
-		  border: solid transparent 5px;
-		  border-bottom-color: rgba(0,0,0,0.8);
-		  transition: opacity 250ms, top 250ms;
-		}
-		dfn:hover {z-index: 2;} /* Keeps the info boxes on top of other elements */
-		dfn:hover::after,
-		dfn:hover::before {opacity: 1;}
-		dfn:hover::after {top: 30px;}
-		dfn:hover::before {top: 20px;}
-
-		section {
-    		height:100vh;
-    		width: 100vw;
-		}
-
-		#cv {
-			font-size:75%;
-		}
-
-		#mainlang {
-			font-size:105%;
-		}
-
-		#secondlang {
-			font-size:60%;
-		}
-
-		#maintext
-		{
-		  height: 96vh;
-		  width: 96vw;
-		  top: 0;
-		  left: 0;
-		  text-overflow: "-";
-		}
-	</style>
-	<!--background-color: #e67300 -->
 </head>
 <body>
 <header><strong>Juan Rodríguez</strong><small>  juanrodriguez.xyz</small></header>
 
 <menu>
-<a id="now" href="#about">Sobre mi</a>
+<a id="now" href="#about">Sobre mí</a>
 <a href="#contact">Contactame!</a>
 <a href="#cv">CV</a>
 <span class="right"><a href="../index.html">English</a></span>
@@ -153,13 +20,13 @@
 <main>
 <section id="index">
 	<h1>Bienvenido!</h1>
-	<p>Hola, me llamo Juan Rodriguez y esta es mi página personal :D</p>
+	<p>Hola, me llamo Juan Rodríguez y esta es mi página personal :D</p>
 </section>
 
 <section id="about">
-	<h1>Sobre mi</h1>
+	<h1>Sobre mí</h1>
 	<div id="maintext">
-	<p>Soy un programador de 21 años, actualmente vivo en San Miguel de Tucumán. Se <a href="#mainlang">algo</a> de C++ and Python (pero si queres podes contratarme para que aprenda lo que sea, no tengo ningun problema). Me gusta mucho la programacion de videojuegos y la infosec.  Si queres ver algo de lo que programé ingresa a mi <a href="https://github.com/jnrdrgz">Github</a>, si querés contratarme <a href="contact.html">contactame</a> o ingresa a mi <a href="https://www.linkedin.com/in/juan-ignacio-rodriguez-707644178/"> LinkedIn</a>, también puedes ver mi <a href="#cv">Curriculum Vitae</a>.</p>
+	<p>Soy un programador autodidacta de 21 años, actualmente vivo en San Miguel de Tucumán. Se <a href="#mainlang">algo</a> de C++ y Python (pero si querés contratarme para que aprenda lo que sea, no tengo ningún problema). Estoy muy interesado en la programación de videojuegos y la infosec.  Si querés ver algo de lo que programé ingresa a mi <a href="https://github.com/jnrdrgz">Github</a>, si querés contratarme <a href="contact.html">contactame</a> o ingresá a mi <a href="https://www.linkedin.com/in/juan-ignacio-rodriguez-707644178/"> LinkedIn</a>, también podés ver mi <a href="#cv">Curriculum Vitae</a>.</p>
 	</div>
 </section>
 
@@ -179,29 +46,29 @@ Otros:
 <span id="mainlang">
 <h1>Curriculum Vitae </h1>
 
-<p>Puedes descargar mi cv <a href="https://github.com/jnrdrgz">aquí<a></p>
+<p>Podés ver mi cv <a href="https://github.com/jnrdrgz">aquí<a></p>
 
 <h2>Más info</h2>
 <h3>Programación:</h3>
 
 <h4>Lenguajes:</h4>
-<p>(Pone el cursor sobre los ? para ver información más detallada sobre cuanto se cada lenguaje)</p>
-<p>C++ <dfn data-info="The sufficient knowledge to pick new libraries and work with them, you can check some little games that I made with SDL in my Github account"> ? </dfn> </p>
-<p>Python <dfn data-info="The sufficient knowledge to make tons and tons of day or two day projects (like web scrappers to stract small data that I needed in a particular moment, pseudo football simulators, basic encryptor/decryptor and some others). As in C++, I can easily pick up new python libraries and read Python code as well."> ? </dfn></p>
+<p>(Poner el cursor sobre los ? para ver información más detallada sobre cuanto se de cada lenguaje)</p>
+<p>C++ <dfn data-info="Se lo suficiente como para usar nuevas librerias y frameworks sin mucha dificultad. En mi cuenta de Github podes ver algunas juegos que hice con la libreria SDL2"> ? </dfn> </p>
+<p>Python <dfn data-info="Se lo suficiente para hacer miles y miles de mini-proyectos de uno o dos días (como extractores de datos de páginas de internet (con BeautifulSoup), pseudo predictores de resultados de futbol, un encriptador/desencriptador de los cifrados mas simples entre otras cosas). Al igual que con C++, puedo facilmente aprender a usar nuevas librerías, también puedo leer código y entenderlo sin problemas."> ? </dfn></p>
 </span>
 
 <span id="secondlang">
 <h4>Otros lenguajes:</h4>
-<p>C <dfn data-info="I used it after Python to learn another language I also made some simple games before I switched to C++."> ? </dfn></p>
-<p>HTML, CSS, Javascript <dfn data-info="The sufficient knowledge to make this webpage. Also I did some online javascript courses in the past."> ? </dfn> </p>
-<p>C# <dfn data-info="I used it for 1.5 years in university"> ? </dfn> </p>
-<p>Lua <dfn data-info="I used it for prototyping a couple of games with the LÖVE game library"> ? </dfn> </p>
-<p>SQL <dfn data-info="I understand all the basic statements and I have a pretty reasonable understanding of databases in general"> ? </dfn> </p>
+<p>C <dfn data-info="Lo use después de aprender Python para aprender otro lenguaje, a su vez también hice un par de juegos pequeños con SDL2 antes de comenzar a usar C++."> ? </dfn></p>
+<p>HTML, CSS, Javascript <dfn data-info="Se lo suficiente como hacer esta página sin usar ningún template, también hice algunos cursos de Javascript online hace algunos años"> ? </dfn> </p>
+<p>C# <dfn data-info="Lo use un año y medio en la universidad"> ? </dfn> </p>
+<p>Lua <dfn data-info="Lo use para hacer prototipos de un par de juegos usando la libreria de juegos LÖVE"> ? </dfn> </p>
+<p>SQL <dfn data-info="Entiendo los comandos básicos y tengo un buen entendimiento sobre bases de datos en general"> ? </dfn> </p>
 </span>
 
 <div id="maintext">
-<p>I have a very good grasp with OOP concepts and I'm now actively learning about OOP design patterns. I know the basics of version of control, I use git and github, but I never used them to work in a team</p>
-<p>I also know how to use Linux, I use Debian as my daily OS but I can also use Windows. To write my programs I use Sublime Text</p>
+<p>Tengo un muy buen entendimiento de los conceptos básicos de la programación orientada objetos, además ahora me encuentro ahondando en el estudio de los patrones de diseño de la POO. Se como usar las funciones básicas de Git y Github pero nunca los usé para trabajar en equipo.</p>
+<p>Uso Debian como mi sistema operativo diario (también utilizo Windows pero prefiero los entornos de Linux en cuanto a programación se refiere) y escribo mis programas generalmente com Sublime Text</p>
 </div>
 </section>
 
