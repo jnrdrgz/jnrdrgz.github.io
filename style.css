@@ -1,12 +1,12 @@
 .left {
-		float:left;
+	float:left;
 	margin:0;
 	padding:0
 }
 .right {
-		float:right;
-		margin:0;
-		padding:0
+	float:right;
+	margin:0;
+	padding:0
 }
 
 html, body {
@@ -20,15 +20,15 @@ html, body {
 
 header {
 	padding:10px 15px;
-		font-size:250%;
+	font-size:250%;
 	background-color: #ffffff;
 }
 
 footer {
 	padding:5px 15px;
-		font-size:110%;
-		position:absolute;
-		right:0;
+	font-size:110%;
+	position:absolute;
+	right:0;
 	bottom:0;
 	left:0;
 	background-color: #ffb350;
@@ -43,12 +43,12 @@ menu {
 menu a {
 	padding:2px 1ex;
 	color: #000000;
-		font-size:120%;
-		text-decoration:none;
+	font-size:120%;
+	text-decoration:none;
 		
 }
 menu a:hover {
-		background-color: #ceccb9;
+	background-color: #ceccb9;
 }
 
 
@@ -64,42 +64,42 @@ main {
 /** Code for hover info **/
 
 dfn {
-  /*background: #e9e9e9;*/
-  border-bottom: dashed 1px rgba(0,0,0,0.8);
-  padding: 0 0.4em;
-  cursor: help;
-  font-style: normal;
-  position: relative;
+  	/*background: #e9e9e9;*/
+	border-bottom: dashed 1px rgba(0,0,0,0.8);
+	padding: 0 0.4em;
+  	cursor: help;
+  	font-style: normal;
+  	position: relative;
   
 }
 dfn::after {
-  content: attr(data-info);
-  display: inline;
-  position: absolute;
-  top: 22px; left: 0;
-  opacity: 0;
-  width: 230px;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5em;
-  padding: 0.5em 0.8em;
-  background: rgba(0,0,0,0.8);
-  color: #fff;
-  pointer-events: none; /* This prevents the box from apearing when hovered. */
-  transition: opacity 250ms, top 250ms;
+  	content: attr(data-info);
+  	display: inline;
+  	position: absolute;
+  	top: 22px; left: 0;
+  	opacity: 0;
+	width: 230px;
+ 	 font-size: 13px;
+  	font-weight: 700;
+  	line-height: 1.5em;
+  	padding: 0.5em 0.8em;
+  	background: rgba(0,0,0,0.8);
+  	color: #fff;
+  	pointer-events: none; /* This prevents the box from apearing when hovered. */
+  	transition: opacity 250ms, top 250ms;
 }
 dfn::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 12px; left: 20px;
-  opacity: 0;
-  width: 0; height: 0;
-  border: solid transparent 5px;
-  border-bottom-color: rgba(0,0,0,0.8);
-  transition: opacity 250ms, top 250ms;
+  	content: '';
+  	display: block;
+  	position: absolute;
+ 	top: 12px; left: 20px;
+ 	opacity: 0;
+ 	width: 0; height: 0;
+	border: solid transparent 5px;
+	border-bottom-color: rgba(0,0,0,0.8);
+ 	transition: opacity 250ms, top 250ms;
 }
-dfn:hover {z-index: 2;} /* Keeps the info boxes on top of other elements */
+dfn:hover {z-index: 2;} 
 dfn:hover::after,
 dfn:hover::before {opacity: 1;}
 dfn:hover::after {top: 30px;}
@@ -125,9 +125,9 @@ section {
 
 #maintext
 {
-  height: 96vh;
-  width: 96vw;
-  top: 0;
-  left: 0;
-  text-overflow: "-";
+  	height: 96vh;
+	width: 96vw;
+  	top: 0;
+  	left: 0;
+  	text-overflow: "-";
 }
