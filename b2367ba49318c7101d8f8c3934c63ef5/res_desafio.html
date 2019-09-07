@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lógica Desafío</title>
+	<meta charset="UTF-8">
+
+</head>
+<body>
+<p>Lo que hace el programa original es tomar un numero (long int) n y concatenarlo a si mismo iterativamente mediante un for loop la cantidad de veces indicada por n almacenandolo en la variable s (si tomamos 10 como ejemplo el valor de s cuando finalice el loop seria 10101010101010101010), y a ese numero, se le calcula el modulo 2017, que es seria el resto del numero cuando es dividido por 2017.<p>
+
+<xmp>
+Puzzle.java
+import java.math.BigInteger;
+
+class Puzzle {
+
+final static BigInteger M = new BigInteger("2017");
+
+private static BigInteger compute(long n) {
+	String s = "";
+	for (long i = 0; i < n; i++) {
+		s = s + n;
+	}
+	return new BigInteger(s.toString()).mod(M);
+}
+
+public static void main(String args[]) {
+	for (long n : new long[] { 1L, 2L, 5L, 10L, 20L, 58184241583791680L }) {
+		System.out.println("" + n + ": " + compute(n));
+	}
+}
+
+</xmp>
+
+<p>Así que lo que tendriamos que hacer es encontrar el modulo en 2017 del numero 58184241583791680 concatenado asi mismo 58184241583791680 veces, cosa que es imposible utilizando la logica del programa original en una computadora promedio actual.</p>
+
+<img src="memerr.png"><img><br>
+Error de memoria al intentar almacenar el numero en un string.<br><br>
+
+<p>Sabemos que el número que estamos buscando está en el rango de valores entre 0 y 2016, debido a que el resultado de un número mod n siempre oscilara entre el 0-n por definición.
+
+Notese que con los valores del modulo de un numero siendo concatenado al resultado de la concatenación anterior nos muestra un patrón como se observa en la imagen. </p>
+
+<p>En base a la función:</p>
+<xmp>
+def get_mod_concat(n, mod, reps):
+	s = str(n)
+	print("{} mod {} = {}".format(s, n, n%mod))
+	for i in range(reps):
+		s += str(n)
+		print("{} mod {} = {}".format(s, n, int(s)%mod))
+</xmp>
+
+<img src="mod_concat.png"></img><br><br>
+
+<p>A su vez notamos que en cada concatenacion el resultado es distinto al primer numero que obtenemos, asi que podemos deducir que cuando este numero se repita, habremos encontrado el patron de resultados de las concatenaciones.</p>
+
+<p>Por razones de simplicidad voy a usar Python para escribir la solución.</p>
+
+<xmp>
+def get_pattern(n, mod):
+	s = str(n)
+	first = n%mod
+	pattern = [first] #lista comienza con el primer nro sin concats
+	vv = None #variable auxiliar para el nro actual
+	while vv!=first:
+		s+=str(n)
+		vv = int(s)%mod
+		if vv!=first:
+			pattern.append(vv)
+	return pattern
+</xmp>
+
+<p>Finalmente, dada la cantidad de repeticiones(concatenaciones) requeridas del numero, podemos encontrar el indice del patron en el cual se encontrara el resultado final (restandole 1 ya que las list de python comienzan en 0).</p>
+
+<xmp>
+def f(reps, n, mod):
+	pattern = get_pattern(n,mod)
+	return pattern[reps%len(pattern)-1]
+</xmp>
+
+<p>Ejecutamos los ejemplos:</p>
+<img src="assertion.png"></img>
+
+<p>Comparamos con los del programa original:</p>
+<img src="res_desa.png"></img>
+
+<p>Finalmente, encontramos la solución al desafío:</p>
+<p><b>465</b></p>
+
+<img src="res_final.jpg"></img>
+
+</body>
+</html>
