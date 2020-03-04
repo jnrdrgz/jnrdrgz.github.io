@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tabla Fecha Prode</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script>
+		function get_partidos_put_in_table(){
+			var equipos = document.getElementById("partidos").value.split("\n").join("-").split(" ").join("").split("-");
+
+
+			equipos.forEach( 
+				
+				(equipo, index) => {
+					equipos[index] = equipo.substring(0,3).toUpperCase();
+				}
+
+			)
+
+			equipos.forEach( 
+				
+				(equipo, index) => {
+					console.log(equipo)
+				}
+
+			)
+
+			let table_ = document.getElementById("tabla");
+			let row = table_.insertRow(-1);
+			row.insertCell();
+			
+			for(var i = 0; i<equipos.length; i += 2){
+				let cell = row.insertCell();
+				cell.innerHTML = "<b>" + equipos[i] + "-" + equipos[i+1] + "</b>";
+			}
+
+			document.getElementById("participante").readOnly = false;
+			document.getElementById("prode").readOnly = false;
+			document.getElementById("partidos").readOnly = true;
+			document.getElementById("button_agregar_partidos").disabled = true;
+		}
+
+
+		function agregar_participante(){
+			var participante_nombre = document.getElementById("participante").value;
+
+			var resultados = document.getElementById("prode").value.replace(/\D/g, "").split("");
+
+			participante.value = "";
+			resultados.value = "";
+
+			if(participante != "" && document.getElementById("prode").value != ""){
+				let table_ = document.getElementById("tabla");
+				let row = table_.insertRow(-1);
+				let cell_nombre = row.insertCell();
+				cell_nombre.innerHTML = participante_nombre;
+
+				for(var i = 0; i<resultados.length; i += 2){
+					let cell = row.insertCell();
+					cell.innerHTML = resultados[i] + "-" + resultados[i+1];
+				}
+
+				let cell_del = row.insertCell();
+					cell_del.innerHTML = '<button onclick=delete_row('+row.rowIndex+')> X</button>';
+			} else {
+				alert("Participate o prode vacío")
+			}
+
+		}
+
+
+		function delete_row(row_n){
+			let table_ = document.getElementById("tabla");
+			table_.deleteRow(row_n);
+		}
+
+	</script>
+</head>
+<body>
+
+<div class="row">
+	<div class="col">
+  
+		<div class="container">
+		Participante:<br>
+		<input type="text" id="participante" readonly><br>
+		Prode:<br>
+		<textarea id="prode" readonly></textarea><br>
+		<button onclick="agregar_participante()" id="button_agregar_prode">Agregar</button><br>
+		</div>
+	
+	</div>
+	<div class="col">
+  		Partidos:<br>
+		<textarea id="partidos"></textarea><br>
+		<button onclick="get_partidos_put_in_table()" id="button_agregar_partidos">Agregar</button><br>
+		
+	</div>
+</div>
+
+<table id="tabla" class="table table-dark">
+
+</table>
+
+</body>
+</html>
