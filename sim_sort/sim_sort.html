@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="estilopc.css">
+	<script>
+		
+		let primeros = [
+			"Palmeiras",
+			"Santos",
+			"Flamengo",
+			"Nacional",
+			"Boca",
+			"River",
+			"Gremio",
+			"Wilstermann",
+		]
+		
+		let segundos = [
+			"Racing",
+			"Guarani",
+			"Independiente",
+			"Liga",
+			"Paranaense",
+			"Internacional",
+			"Delfin",
+			"Libertad",
+		]
+
+		const getPartido = () => {
+			//alert("holar")
+			let ps = document.getElementById("partidos")
+			let d = document.createElement("div");  
+			eq1 = Math.floor(Math.random() * primeros.length)
+			eq2 = Math.floor(Math.random() * primeros.length)
+			
+			let im1 = document.createElement("img");
+			im1.src="imgs/"+primeros[eq1]+".png"
+			
+			let im2 = document.createElement("img");
+			im2.src="imgs/"+segundos[eq2]+".png"
+			
+			d.innerHTML = primeros[eq1]+"-"+segundos[eq2]
+			ps.appendChild(im1);
+			ps.appendChild(im2);
+			ps.appendChild(d);
+
+			primeros.splice(eq1, 1);
+			segundos.splice(eq2, 1);
+			
+		}
+
+		const simular = () => {
+			let ps = document.getElementById("partidos")
+			ps.innerHTML = "";
+			let n = 1 
+			while(primeros.length != 0){
+				getPartido()
+				n++;
+				if(n>100){
+					break;
+				}
+			}
+
+			primeros = [
+			"Palmeiras",
+			"Santos",
+			"Flamengo",
+			"Nacional",
+			"Boca",
+			"River",
+			"Gremio",
+			"Wilstermann",
+		]
+		
+		 segundos = [
+			"Racing",
+			"Guarani",
+			"Independiente",
+			"Liga",
+			"Paranaense",
+			"Internacional",
+			"Delfin",
+			"Libertad",
+		]
+		}
+	</script>
+
+</head>
+<body>
+	<div id="partidos"></div>
+	<button onclick="simular()">Simular Sorteo</button>
+</body>
+</html>
