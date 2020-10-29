@@ -81,6 +81,62 @@
 			table_.deleteRow(row_n);
 		}
 
+		const print_tab = () => {
+			let resultados_arr = []
+			var resultados = document.getElementById("reales").value.replace(/\D/g, "").split("");
+			for(var i = 0; i<resultados.length; i += 2){
+				resultados_arr.push(resultados[i] + "-" + resultados[i+1])
+			}
+			var table = document.getElementById("tabla");
+			let r_ind = 0;
+
+			let ptos_participantes = {}
+			let ptos_fecha = 0
+			   
+			for (var i = 1, row; row = table.rows[i]; i++) {
+			   //iterate through rows
+			   //rows would be accessed using the "row" variable assigned in the for loop
+			   ptos_fecha = 0
+			   for (var j = 1, col; col = row.cells[j]; j++) {
+			     //iterate through columns
+			     //columns would be accessed using the "col" variable assigned in the for loop
+			     let real = resultados_arr[r_ind]
+			     let part = col.innerHTML
+			     console.log("col", col.innerHTML)
+			     console.log("real", resultados_arr[r_ind])
+
+			     let glr = parseInt(real.split("-")[0])
+			     let gvr = parseInt(real.split("-")[1])
+				 let plr = parseInt(part.split("-")[0])
+			     let pvr = parseInt(part.split("-")[1])
+
+			     if(real !== "9-9"){
+			     	if(real === part){
+			     		col.className = "bg-success"
+			     		ptos_fecha+=3
+			     	} else if (glr > gvr && plr > pvr ||
+				     		glr < gvr && plr < pvr ||
+				     		glr === gvr && plr === pvr ){
+							
+							col.className = "bg-warning"
+							ptos_fecha+=1
+	
+			     	} else {
+							col.className = ""			     		
+			     	}
+			 	}
+			     
+			     if(row.cells.length-2 == j) j++
+			     r_ind++
+			     
+			   }
+			   ptos_participantes[row.cells[0].innerHTML]=ptos_fecha
+			   r_ind=0  
+				
+			}
+			console.log(ptos_participantes)
+
+		}
 	</script>
 </head>
 <body>
@@ -91,12 +147,19 @@
 		<div class="container">
 		Participante:<br>
 		<input type="text" id="participante" readonly><br>
+		
+
 		Prode:<br>
 		<textarea id="prode" readonly></textarea><br>
 		<button onclick="agregar_participante()" id="button_agregar_prode">Agregar</button><br>
 		</div>
 	
 	</div>
+	<div class="col">
+		reales:<br>
+		<textarea id="reales"></textarea><br>
+		<button onclick="print_tab()" id="button_agregar_prode">tab</button><br>
+		</div>
 	<div class="col">
   		Partidos:<br>
 		<textarea id="partidos"></textarea><br>
@@ -108,6 +171,9 @@
 <table id="tabla" class="table table-dark">
 
 </table>
+<div id="tablafecha">
+
+</div>
 
 </body>
 </html>
