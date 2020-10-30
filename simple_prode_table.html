@@ -81,6 +81,99 @@
 			table_.deleteRow(row_n);
 		}
 
+		function download(content, fileName, contentType) {
+		    var a = document.createElement("a");
+		    var file = new Blob([content], {type: "text/plain"});
+		    a.href = URL.createObjectURL(file);
+		    a.download = fileName;
+		    a.click();
+		}
+
+		const export_json = () => {
+			var table = document.getElementById("tabla");
+			let partidos = []
+			//table.rows[0]
+			for (var j = 0, col; col = table.rows[0].cells[j]; j++) {
+				let part = col.innerHTML
+				partidos.push(part.replace("<b>", "").replace("</b>",""))
+				console.log(part)
+				//console.log(i,j,col.innerHTML)
+				//if(j==0) break;			
+			}
+				
+			var exp_json = []
+			for (var i = 1, row; row = table.rows[i]; i++) {
+				let prode = {}
+				prode.participante =  row.cells[0].innerHTML
+				console.log("NOMBRE", row.cells[0].innerHTML)
+				let arr_res = []
+				for (var j = 1, col; col = row.cells[j]; j++) {
+					let part = col.innerHTML
+					arr_res.push(part)
+					console.log("RESULTADO", col.innerHTML)
+					if(row.cells.length-2 == j) j++
+				}
+				prode.resultados = arr_res
+				exp_json.push(prode)
+			}
+
+			console.log({prodes: exp_json})
+
+			var jsonData = JSON.stringify({prodes: exp_json, partidos: partidos});
+			download(jsonData, "json_file.json")
+		}
+
+		const cargar_part_from_json = (json_file) => {
+			console.log(typeof(json_file))
+			let table_ = document.getElementById("tabla");
+			let row_match = table_.insertRow(-1);
+			//row_match.insertCell();
+			for(var i = 0; i<json_file.partidos.length; i++){
+				let cell = row_match.insertCell();
+				cell.innerHTML = "<b>" + json_file.partidos[i] + "</b>";
+			}
+			//row_match.insertCell();
+
+			for(var i = 0; i<json_file.prodes.length; i++){
+				let row = table_.insertRow(-1);
+				let cell_nombre = row.insertCell();
+				cell_nombre.innerHTML = json_file.prodes[i].participante;
+					
+				for(var j = 0; j<json_file.prodes[i].resultados.length; j++){
+					let cell = row.insertCell();
+					cell.innerHTML = json_file.prodes[i].resultados[j]
+				}
+
+				let cell_del = row.insertCell();
+				cell_del.innerHTML = '<button onclick=delete_row('+row.rowIndex+')> X</button>';
+			}		
+			
+		}
+
+		const import_json = () => {
+			//console.log(document.getElementById('input_import'))
+
+			var file = document.getElementById("input_import").files[0];
+
+			if (file) {
+			    var reader = new FileReader();
+			    reader.readAsText(file, "UTF-8");
+			    reader.onload = function (evt) {
+			    	//console.log(JSON.stringify(evt.target.result))
+
+					var obj = JSON.parse(evt.target.result);
+
+					console.log(obj)
+					cargar_part_from_json(obj)
+
+
+			    }
+			    reader.onerror = function (evt) {
+			    	console.log("error reading file")
+			    }
+			}
+		}
+
 		const print_tab = () => {
 			let resultados_arr = []
 			var resultados = document.getElementById("reales").value.replace(/\D/g, "").split("");
@@ -158,7 +251,12 @@
 	<div class="col">
 		reales:<br>
 		<textarea id="reales"></textarea><br>
-		<button onclick="print_tab()" id="button_agregar_prode">tab</button><br>
+		<button onclick="print_tab()" id="button_agregar_prode">Comparar</button><br><br>
+		<button onclick="export_json()" id="button_exp">Exportar</button><br>
+		<button onclick="import_json()" id="button_exp">Importar</button><input id="input_import" type="file">
+		
+		
+		
 		</div>
 	<div class="col">
   		Partidos:<br>
@@ -171,7 +269,12 @@
 <table id="tabla" class="table table-dark">
 
 </table>
+
 <div id="tablafecha">
+
+</div>
+
+<div id="mensajes">
 
 </div>
 
