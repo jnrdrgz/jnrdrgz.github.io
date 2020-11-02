@@ -123,6 +123,46 @@
 			download(jsonData, "json_file.json")
 		}
 
+		const tablar = (ptos_p) => {
+			let tabla = document.getElementById("tabla_ptos");
+			let row_b = tabla.insertRow(-1);
+			row_b.insertCell().innerHTML = "Participate";
+			row_b.insertCell().innerHTML = "Ptos";
+			row_b.insertCell().innerHTML = "Plenos";
+			
+			let ptos_sort = ptos_p.sort((a,b) => {
+				if (a.puntos > b.puntos) return -1;
+				if (a.puntos < b.puntos) return 1;
+				if (a.plenos < b.plenos) return -1;
+				if (a.plenos > b.plenos) return 1;
+			})
+
+			let cantidad_desc = 2
+			for(var i = 0; i<ptos_p.length; i++){
+				let row = tabla.insertRow(-1);
+				if(i<=1) row.className = "bg-success"
+				if(i >= ptos_p.length-cantidad_desc) row.className = "bg-danger"
+				let cell_nombre = row.insertCell();
+				cell_nombre.innerHTML = ptos_p[i].participante;
+
+				let cell_pts = row.insertCell();
+				cell_pts.innerHTML = ptos_p[i].puntos
+				let cell_plenos = row.insertCell();
+				cell_plenos.innerHTML = ptos_p[i].plenos
+
+				/*{
+				  "Molina": 6,
+				  "Hasbani": 8,
+				  "Sanabria": 6,
+				  "Juri": 6,
+				  "Cazullo": 7,
+				  "Lisiak": 9,
+				  "Correa": 6,
+				  "Santa Cruz": 3
+				}*/
+			}
+		}
+
 		const cargar_part_from_json = (json_file) => {
 			console.log(typeof(json_file))
 			let table_ = document.getElementById("tabla");
@@ -166,6 +206,11 @@
 					console.log(obj)
 					cargar_part_from_json(obj)
 
+					document.getElementById("participante").readOnly = false;
+					document.getElementById("prode").readOnly = false;
+					document.getElementById("partidos").readOnly = true;
+					document.getElementById("button_agregar_partidos").disabled = true;
+
 
 			    }
 			    reader.onerror = function (evt) {
@@ -183,14 +228,36 @@
 			var table = document.getElementById("tabla");
 			let r_ind = 0;
 
-			let ptos_participantes = {}
+			let ptos_participantes = []
 			let ptos_fecha = 0
+			let plenos_fecha = 0
+
+			var _msjs = document.getElementById("mensajes");
+			_msjs.innerHTML = ""
+			
+			//
+			const append_to_msjs = (msj) => {
+				var node = document.createElement("p");  
+				node.innerHTML = msj
+				var msjs = document.getElementById("mensajes");
+				msjs.appendChild(node)
+
+			}
+
+			var curr_p = 1;
 			   
 			for (var i = 1, row; row = table.rows[i]; i++) {
 			   //iterate through rows
 			   //rows would be accessed using the "row" variable assigned in the for loop
+			  
 			   ptos_fecha = 0
+			   plenos_fecha = 0
 			   for (var j = 1, col; col = row.cells[j]; j++) {
+			  	//if(i == 1 && j == curr_p){
+			  	//	append_to_msjs(`Por ${table.rows[0].cells[j].innerHTML}`)
+			  	//	curr_p++
+			  	//}
+			   	
 			     //iterate through columns
 			     //columns would be accessed using the "col" variable assigned in the for loop
 			     let real = resultados_arr[r_ind]
@@ -207,12 +274,16 @@
 			     	if(real === part){
 			     		col.className = "bg-success"
 			     		ptos_fecha+=3
+			     		plenos_fecha += 1
+			     		//append_to_msjs(`Suma 3 ${row.cells[0].innerHTML}`)
+
 			     	} else if (glr > gvr && plr > pvr ||
 				     		glr < gvr && plr < pvr ||
 				     		glr === gvr && plr === pvr ){
 							
 							col.className = "bg-warning"
 							ptos_fecha+=1
+							//append_to_msjs(`Suma 1 ${row.cells[0].innerHTML}`)
 	
 			     	} else {
 							col.className = ""			     		
@@ -223,10 +294,12 @@
 			     r_ind++
 			     
 			   }
-			   ptos_participantes[row.cells[0].innerHTML]=ptos_fecha
+			   ptos_participantes.push({participante: row.cells[0].innerHTML, puntos:ptos_fecha, plenos:plenos_fecha})
 			   r_ind=0  
 				
 			}
+
+			tablar(ptos_participantes)
 			console.log(ptos_participantes)
 
 		}
@@ -271,7 +344,15 @@
 </table>
 
 <div id="tablafecha">
+	<div class="row">
+		<div class="col">
+			<table id="tabla_ptos" class="table table-dark">
 
+			</table>
+		</div>
+		<div class="col">
+		</div>
+	</div>
 </div>
 
 <div id="mensajes">
