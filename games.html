@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Juan Ignacio Rodríguez - Games</title>
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta charset="utf-8">
+</head>
+<body>
+<header><strong>Juan Ignacio Rodríguez - Games</strong></header>
+
+<menu>
+<a id="now" href="index.html">Main</a>
+</menu>
+
+<script>
+	_show = (imgs_id, this_button) => {
+		let x = document.getElementById(imgs_id);
+		if (x.style.display === "none") {
+			x.style.display = "block";
+			this_button.innerText = "Hide"
+		} else {
+			x.style.display = "none";
+			this_button.innerText = "Show"
+		}
+	}
+</script>
+
+<div style="margin:10px">
+<h2>Bad Drones</h2>
+	<img width="480" height="320" src="imgs/badrones.png">
+
+<p>Find your way to the lost engine trough 3 floors. A top down shooter made for the 2021 global game jam. I worked with a 2D artist</p>
+
+<p>Engine: Godot</p>
+<p>Jam theme: lost and found</p>
+
+<h4>Images<button onclick="_show('images_drones', this)">Hide</button></h4> 
+<div id="images_drones">
+	<img width="480" height="320" src="imgs/badrones.gif">
+	<img width="480" height="320" src="imgs/badrones1.gif">
+	<img width="480" height="320" src="imgs/badrones2.gif">
+</div>
+
+<h4><a href="https://github.com/jnrdrgz/BadDrones">Repo</a></h4>
+<h4><a href="https://globalgamejam.org/2021/games/bad-drones-1?token=1612382318">GGJ link</a></h4>
+<h4><a href="https://github.com/jnrdrgz/BadDrones/raw/master/Release/BadDrones.exe">Download final version (exe)</a></h4>
+
+
+<h2>PPlant</h2>
+	<img width="480" height="320" src="imgs/pplant.png">
+<p>You have to prevent a meltdown in the power plant</p>
+
+<p>Engine: Godot</p>
+<p>Jam theme: Power</p>
+<p>Jam Limitation: Only 5 colors</p>
+
+<h4>Images<button onclick="_show('images_pplant', this)">Hide</button></h4> 
+<div id="images_pplant">
+	<img width="480" height="320" src="imgs/pplant.gif">
+	<img width="480" height="320" src="imgs/pplant1.gif">
+	<img width="480" height="320" src="imgs/pplant2.gif">
+</div>
+
+<h4><a href="https://github.com/jnrdrgz/PPlant">Repo</a></h4>
+<h4>Jam link: not finished on time :c</h4>
+<h4><a href="https://github.com/jnrdrgz/PPlant/raw/master/Release/pplant_0_1.exe">Download final version (exe)</a></h4>
+</div>
+</body>
+</html>
