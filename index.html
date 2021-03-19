@@ -111,14 +111,18 @@ See <a href="games.html">Games<a>
 </main>
 
 <script>
-	if(window.location.search.substr(1)){
-		var r2 = new XMLHttpRequest();
-			r2.open("POST", "https://enxk3jhsfy5ux0f.m.pipedream.net", true);
-			r2.onreadystatechange = function () {
-			  if (r.readyState != 4 || r.status != 200) return;
-			  console.log("Success: " + r.responseText);
-		};
-		r2.send(window.location.search.substr(1));
+	var gparams = window.location.search.substr(1)
+
+	if(gparams){
+		if(gparams!="s=nosend"){
+			var r2 = new XMLHttpRequest();
+				r2.open("POST", "https://enxk3jhsfy5ux0f.m.pipedream.net", true);
+				r2.onreadystatechange = function () {
+				  if (r.readyState != 4 || r.status != 200) return;
+				  console.log("Success: " + r.responseText);
+			};
+			r2.send(window.location.search.substr(1));
+		}
 	} else {
 		var r2 = new XMLHttpRequest();
 			r2.open("POST", "https://enxk3jhsfy5ux0f.m.pipedream.net", true);
