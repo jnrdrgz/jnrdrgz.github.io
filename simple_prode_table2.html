@@ -374,6 +374,24 @@
 	</div>
 </div>
 
+<script>
+	change_color_table = (b) => {
+		console.log(b)
+		var mytable = document.getElementById("tabla");
+		mytable.className = "table table-" + b.className.split("-")[1]
+	}
+
+</script>
+<button type="button" class="btn btn-primary" onclick="change_color_table(this)">Primary</button>
+<button type="button" class="btn btn-secondary" onclick="change_color_table(this)">Secondary</button>
+<button type="button" class="btn btn-success" onclick="change_color_table(this)">Success</button>
+<button type="button" class="btn btn-danger" onclick="change_color_table(this)">Danger</button>
+<button type="button" class="btn btn-warning" onclick="change_color_table(this)">Warning</button>
+<button type="button" class="btn btn-info" onclick="change_color_table(this)">Info</button>
+<button type="button" class="btn btn-light" onclick="change_color_table(this)">Light</button>
+<button type="button" class="btn btn-dark" onclick="change_color_table(this)">Dark</button>
+
+
 <table id="tabla" class="table table-dark">
 
 </table>
