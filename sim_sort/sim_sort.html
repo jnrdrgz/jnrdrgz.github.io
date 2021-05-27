@@ -7,24 +7,24 @@
 		
 		let primeros = [
 			"Palmeiras",
-			"Santos",
+			"Argentinos",
+			"Mineiro",
+			"Fluminense",
+			"Racing",
+			"Internacional",
+			"Barcelona",
 			"Flamengo",
-			"Nacional",
-			"Boca",
-			"River",
-			"Gremio",
-			"Wilstermann",
 		]
 		
 		let segundos = [
-			"Racing",
-			"Guarani",
-			"Independiente",
-			"Liga",
-			"Paranaense",
-			"Internacional",
-			"Delfin",
-			"Libertad",
+			"Defensa",
+			"River",
+			"Sao Paulo",
+			"Cerro",
+			"Olimpia",
+			"Boca",
+			"Catolica",
+			"Velez",
 		]
 
 		const getPartido = () => {
@@ -35,10 +35,14 @@
 			eq2 = Math.floor(Math.random() * primeros.length)
 			
 			let im1 = document.createElement("img");
-			im1.src="imgs/"+primeros[eq1]+".png"
+			im1.setAttribute("width", "25"); 
+			im1.setAttribute("height", "25"); 
+			im1.src="imgs/"+primeros[eq1].replaceAll(" ", "")+".png"
 			
 			let im2 = document.createElement("img");
-			im2.src="imgs/"+segundos[eq2]+".png"
+			im2.setAttribute("width", "25"); 
+			im2.setAttribute("height", "25"); 
+			im2.src="imgs/"+segundos[eq2].replaceAll(" ", "")+".png"
 			
 			d.innerHTML = primeros[eq1]+"-"+segundos[eq2]
 			ps.appendChild(im1);
@@ -51,6 +55,8 @@
 		}
 
 		const simular = () => {
+			let _pms = primeros
+			let _scs = segundos
 			let ps = document.getElementById("partidos")
 			ps.innerHTML = "";
 			let n = 1 
@@ -64,24 +70,24 @@
 
 			primeros = [
 			"Palmeiras",
-			"Santos",
+			"Argentinos",
+			"Mineiro",
+			"Fluminense",
+			"Racing",
+			"Internacional",
+			"Barcelona",
 			"Flamengo",
-			"Nacional",
-			"Boca",
-			"River",
-			"Gremio",
-			"Wilstermann",
 		]
 		
-		 segundos = [
-			"Racing",
-			"Guarani",
-			"Independiente",
-			"Liga",
-			"Paranaense",
-			"Internacional",
-			"Delfin",
-			"Libertad",
+		segundos = [
+			"Defensa",
+			"River",
+			"Sao Paulo",
+			"Cerro",
+			"Olimpia",
+			"Boca",
+			"Catolica",
+			"Velez",
 		]
 		}
 	</script>

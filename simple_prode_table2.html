@@ -264,20 +264,10 @@
 
 			var curr_p = 1;
 			   
-			for (var i = 1, row; row = table.rows[i]; i++) {
-			   //iterate through rows
-			   //rows would be accessed using the "row" variable assigned in the for loop
-			  
+			for (var i = 1, row; row = table.rows[i]; i++) {			  
 			   ptos_fecha = 0
 			   plenos_fecha = 0
 			   for (var j = 1, col; col = row.cells[j]; j++) {
-			  	//if(i == 1 && j == curr_p){
-			  	//	append_to_msjs(`Por ${table.rows[0].cells[j].innerHTML}`)
-			  	//	curr_p++
-			  	//}
-			   	
-			     //iterate through columns
-			     //columns would be accessed using the "col" variable assigned in the for loop
 			     let real = resultados_arr[r_ind]
 			     let part = col.innerHTML
 			     console.log("col", col.innerHTML)
