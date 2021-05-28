@@ -35,13 +35,13 @@
 			eq2 = Math.floor(Math.random() * primeros.length)
 			
 			let im1 = document.createElement("img");
-			im1.setAttribute("width", "25"); 
-			im1.setAttribute("height", "25"); 
+			im1.setAttribute("width", "33"); 
+			im1.setAttribute("height", "33"); 
 			im1.src="imgs/"+primeros[eq1].replaceAll(" ", "")+".png"
 			
 			let im2 = document.createElement("img");
-			im2.setAttribute("width", "25"); 
-			im2.setAttribute("height", "25"); 
+			im2.setAttribute("width", "33"); 
+			im2.setAttribute("height", "33"); 
 			im2.src="imgs/"+segundos[eq2].replaceAll(" ", "")+".png"
 			
 			d.innerHTML = primeros[eq1]+"-"+segundos[eq2]
@@ -94,7 +94,11 @@
 
 </head>
 <body>
-	<div id="partidos"></div>
-	<button onclick="simular()">Simular Sorteo</button>
+	<div style="display: flex; align-content:center; justify-content: center ">
+		<div style="">
+		<div id="partidos"></div>
+		<button onclick="simular()" style="background-color: #000000;border: none;color: white;text-align: center;text-decoration: none;font-size: 22px;">Simular Sorteo</button>
+		</div>
+	</div>
 </body>
 </html>
