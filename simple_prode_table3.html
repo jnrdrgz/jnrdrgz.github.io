@@ -74,10 +74,22 @@
 				let cell_nombre = row.insertCell();
 				cell_nombre.innerHTML = participante_nombre;
 
+				let tiene_resultados_iguales = []
 				for(var i = 0; i<resultados.length; i += 2){
 					let cell = row.insertCell();
 					cell.innerHTML = resultados[i] + "-" + resultados[i+1];
+					tiene_resultados_iguales.push(cell.innerHTML)
 				}
+				var dic_equals = tiene_resultados_iguales.reduce(function(obj, b) {
+				  obj[b] = ++obj[b] || 1;
+				  return obj;
+				}, {});
+
+				Object.keys(dic_equals).forEach(k => {
+					if(dic_equals[k] > 6){
+						alert("¡¡¡¡¡¡¡Participate con más de 6 resultados iguales!!!!!!!")
+					}
+				})
 
 				let cell_del = row.insertCell();
 					cell_del.innerHTML = '<button onclick=delete_row('+row.rowIndex+')> X</button>';
