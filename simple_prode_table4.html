@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tabla Fecha Prode</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script>
+		var ptos_inicio_participantes = {}
+
+		function get_partidos_put_in_table(){
+			var equipos = document.getElementById("partidos").value.split("\n").join("-").split(" ").join("").split("-");
+
+
+			equipos.forEach( 
+				
+				(equipo, index) => {
+					equipos[index] = equipo.substring(0,3).toUpperCase();
+				}
+
+			)
+
+			equipos.forEach( 
+				
+				(equipo, index) => {
+					console.log(equipo)
+				}
+
+			)
+
+			let table_ = document.getElementById("tabla");
+			let row = table_.insertRow(-1);
+			row.insertCell();
+			
+			for(var i = 0; i<equipos.length; i += 2){
+				let cell = row.insertCell();
+				cell.innerHTML = "<b>" + equipos[i] + "-" + equipos[i+1] + "</b>";
+			}
+
+			document.getElementById("participante").readOnly = false;
+			document.getElementById("prode").readOnly = false;
+			document.getElementById("partidos").readOnly = true;
+			document.getElementById("button_agregar_partidos").disabled = true;
+		}
+
+
+		function agregar_participante(){
+			var participante_nombre = document.getElementById("participante").value;
+
+			var participante_ptos = document.getElementById("participante_ptos").value;
+			var participante_plenos = document.getElementById("participante_plenos").value;
+			var participante_goles = document.getElementById("participante_goles").value;
+
+			ptos_inicio_participantes[participante_nombre] = {
+				puntos:participante_ptos,
+				plenos:participante_plenos,
+				goles:participante_goles,
+			}
+
+			var resultados = document.getElementById("prode").value.replace(/\D/g, "").split("");
+
+			participante.value = "";
+			resultados.value = "";
+
+			if(participante != "" && document.getElementById("prode").value != ""){
+				let table_ = document.getElementById("tabla");
+				let row = table_.insertRow(-1);
+				let cell_nombre = row.insertCell();
+				cell_nombre.innerHTML = participante_nombre;
+
+				let tiene_resultados_iguales = []
+				for(var i = 0; i<resultados.length; i += 2){
+					let cell = row.insertCell();
+					cell.innerHTML = resultados[i] + "-" + resultados[i+1];
+					tiene_resultados_iguales.push(cell.innerHTML)
+				}
+				var dic_equals = tiene_resultados_iguales.reduce(function(obj, b) {
+				  obj[b] = ++obj[b] || 1;
+				  return obj;
+				}, {});
+
+				Object.keys(dic_equals).forEach(k => {
+					if(dic_equals[k] > 6){
+						alert("¡¡¡¡¡¡¡Participate con más de 6 resultados iguales!!!!!!!")
+					}
+				})
+
+				let cell_del = row.insertCell();
+					cell_del.innerHTML = '<button onclick=delete_row('+row.rowIndex+')> X</button>';
+			} else {
+				alert("Participate o prode vacío")
+			}
+
+
+			print_tab()
+
+		}
+
+
+		function delete_row(row_n){
+			let table_ = document.getElementById("tabla");
+			table_.deleteRow(row_n);
+		}
+
+		function download(content, fileName, contentType) {
+		    var a = document.createElement("a");
+		    var file = new Blob([content], {type: "text/plain"});
+		    a.href = URL.createObjectURL(file);
+		    a.download = fileName;
+		    a.click();
+		}
+
+		const get_json = () => {
+			var table = document.getElementById("tabla");
+			let partidos = []
+			//table.rows[0]
+			for (var j = 0, col; col = table.rows[0].cells[j]; j++) {
+				let part = col.innerHTML
+				partidos.push(part.replace("<b>", "").replace("</b>",""))
+				console.log(part)
+				//console.log(i,j,col.innerHTML)
+				//if(j==0) break;			
+			}
+				
+			var exp_json = []
+			for (var i = 1, row; row = table.rows[i]; i++) {
+				let prode = {}
+				prode.participante =  row.cells[0].innerHTML
+				console.log("NOMBRE", row.cells[0].innerHTML)
+				let arr_res = []
+				for (var j = 1, col; col = row.cells[j]; j++) {
+					let part = col.innerHTML
+					arr_res.push(part)
+					console.log("RESULTADO", col.innerHTML)
+					if(row.cells.length-2 == j) j++
+				}
+				prode.resultados = arr_res
+				exp_json.push(prode)
+			}
+
+			console.log({prodes: exp_json})
+
+			var jsonData = JSON.stringify({
+				prodes: exp_json, 
+				partidos: partidos, 
+				puntos_inicales: ptos_inicio_participantes,
+
+			});
+
+			return jsonData
+		}
+
+		const export_json = () => {
+			let jsonData = get_json()
+
+			download(jsonData, "json_file.json")
+		}
+
+		const save_json_local_storage = (name="test_prode") => {
+			let prodes_from_local = localStorage.getItem('prodes');
+			if(!prodes_from_local){
+				prodes_from_local = {}
+			} else{
+				prodes_from_local = JSON.parse(prodes_from_local)
+			}
+			let jsonData = get_json()
+			prodes_from_local[name] = jsonData
+			prodes_from_local.last = jsonData
+
+			console.log("name", prodes_from_local)
+			
+			localStorage.setItem('prodes', JSON.stringify(prodes_from_local));
+
+			console.log(localStorage.getItem('prodes'))
+		}		
+
+		const onclick_save_json_local_storage = () => {
+			var nombre_save = document.getElementById("local_nombre").value;
+			if(nombre_save === ""){
+				alert("ponele un nombre salame")
+			} else {
+				save_json_local_storage(nombre_save)
+			}
+		}
+
+		const get_json_local_storage = (name="test_prode") => {
+			let prodes_from_local = localStorage.getItem('prodes');
+			console.log(prodes_from_local)
+			prodes_from_local = JSON.parse(prodes_from_local)
+
+			let jsonData = prodes_from_local[name]
+			load_json_str_in_table(jsonData)
+		}
+
+		const onclick_get_json_local_storage = () => {
+			var nombre_load = document.getElementById("locales").value;
+			//console.log(nombre_load)
+			get_json_local_storage(nombre_load)
+		}
+		
+
+		const get_from_local_to_pop_select = () => {
+			let prodes_from_local = localStorage.getItem('prodes');
+			prodes_from_local = JSON.parse(prodes_from_local)
+			
+			let select_element = document.getElementById("locales")
+			Object.keys(prodes_from_local).forEach(k => {
+				var option = document.createElement("option");
+				option.value = k;
+				option.text = k;
+				select_element.appendChild(option);
+			})
+		}
+
+		const tablar = (ptos_p, tabla_id) => {
+			let tabla = document.getElementById(tabla_id);
+			tabla.innerHTML = ""
+			
+			let row_b = tabla.insertRow(-1);
+			row_b.insertCell().innerHTML = "Participate";
+			row_b.insertCell().innerHTML = "Ptos";
+			row_b.insertCell().innerHTML = "Plenos";
+			row_b.insertCell().innerHTML = "Goles";
+			
+			let ptos_sort = ptos_p.sort((a,b) => {
+				if (a.puntos > b.puntos) return -1;
+				if (a.puntos < b.puntos) return 1;
+
+				if (a.plenos > b.plenos) return -1;
+				if (a.plenos < b.plenos) return 1;
+
+				if (a.goles > b.goles) return -1;
+				if (a.goles < b.goles) return 1;
+			})
+
+			let cantidad_desc = 2
+			for(var i = 0; i<ptos_p.length; i++){
+				let row = tabla.insertRow(-1);
+				if(i===0) row.className = "bg-success"
+				if(i >= ptos_p.length-cantidad_desc) row.className = "bg-danger"
+				let cell_nombre = row.insertCell();
+				cell_nombre.innerHTML = ptos_p[i].participante;
+
+				let cell_pts = row.insertCell();
+				cell_pts.innerHTML = ptos_p[i].puntos
+				let cell_plenos = row.insertCell();
+				cell_plenos.innerHTML = ptos_p[i].plenos
+				let cell_goles = row.insertCell();
+				cell_goles.innerHTML = ptos_p[i].goles
+
+				/*{
+				  "Molina": 6,
+				  "Hasbani": 8,
+				  "Sanabria": 6,
+				  "Juri": 6,
+				  "Cazullo": 7,
+				  "Lisiak": 9,
+				  "Correa": 6,
+				  "Santa Cruz": 3
+				}*/
+			}
+		}
+
+		//here
+		const cargar_part_from_json = (json_file) => {
+			console.log(typeof(json_file))
+			let table_ = document.getElementById("tabla");
+			let row_match = table_.insertRow(-1);
+			//row_match.insertCell();
+			for(var i = 0; i<json_file.partidos.length; i++){
+				let cell = row_match.insertCell();
+				cell.innerHTML = "<b>" + json_file.partidos[i] + "</b>";
+			}
+			//row_match.insertCell();
+
+			for(var i = 0; i<json_file.prodes.length; i++){
+				let row = table_.insertRow(-1);
+				let cell_nombre = row.insertCell();
+				cell_nombre.innerHTML = json_file.prodes[i].participante;
+					
+				for(var j = 0; j<json_file.prodes[i].resultados.length; j++){
+					let cell = row.insertCell();
+					cell.innerHTML = json_file.prodes[i].resultados[j]
+				}
+
+				let cell_del = row.insertCell();
+				cell_del.innerHTML = '<button onclick=delete_row('+row.rowIndex+')> X</button>';
+			}		
+			
+		}
+
+		const load_json_str_in_table = (str_json) => {
+			var obj = JSON.parse(str_json);
+
+			console.log(obj)
+			cargar_part_from_json(obj)
+			ptos_inicio_participantes = obj.puntos_inicales
+
+			console.log(obj.puntos_inicales)
+			document.getElementById("participante").readOnly = false;
+			document.getElementById("prode").readOnly = false;
+			document.getElementById("partidos").readOnly = true;
+			document.getElementById("button_agregar_partidos").disabled = true;
+		}
+
+		const import_json = () => {
+			//console.log(document.getElementById('input_import'))
+
+			var file = document.getElementById("input_import").files[0];
+
+			if (file) {
+			    var reader = new FileReader();
+			    reader.readAsText(file, "UTF-8");
+			    reader.onload = function (evt) {
+			    	//console.log(JSON.stringify(evt.target.result))
+			    	load_json_str_in_table(evt.target.result)
+			    }
+			    reader.onerror = function (evt) {
+			    	console.log("error reading file")
+			    }
+			}
+		}
+
+		const print_tab = () => {
+			let resultados_arr = []
+			var resultados = document.getElementById("reales").value.replace(/\D/g, "").split("");
+			for(var i = 0; i<resultados.length; i += 2){
+				resultados_arr.push(resultados[i] + "-" + resultados[i+1])
+			}
+			var table = document.getElementById("tabla");
+			let r_ind = 0;
+
+			let ptos_participantes = []
+			let ptos_fecha = 0
+			let plenos_fecha = 0
+			let goles_fecha = 0
+
+			var _msjs = document.getElementById("mensajes");
+			_msjs.innerHTML = ""
+			
+			//
+			const append_to_msjs = (msj) => {
+				var node = document.createElement("p");  
+				node.innerHTML = msj
+				var msjs = document.getElementById("mensajes");
+				msjs.appendChild(node)
+
+			}
+
+			var curr_p = 1;
+			   
+			for (var i = 1, row; row = table.rows[i]; i++) {			  
+			   ptos_fecha = 0
+			   plenos_fecha = 0
+			   goles_fecha = 0
+			   for (var j = 1, col; col = row.cells[j]; j++) {
+			     let real = resultados_arr[r_ind]
+			     let part = col.innerHTML
+			     console.log("col", col.innerHTML)
+			     console.log("real", resultados_arr[r_ind])
+			     if(!real) break;
+			     let glr = parseInt(real.split("-")[0])
+			     let gvr = parseInt(real.split("-")[1])
+				 let plr = parseInt(part.split("-")[0])
+			     let pvr = parseInt(part.split("-")[1])
+
+			     if(real !== "9-9" && part !== "9-9"){
+			     	if(real === part){
+			     		col.className = "bg-success"
+			     		ptos_fecha+=3
+			     		plenos_fecha += 1
+			     		goles_fecha += plr+pvr
+			     		//append_to_msjs(`Suma 3 ${row.cells[0].innerHTML}`)
+
+			     	} else if (glr > gvr && plr > pvr ||
+			     		glr < gvr && plr < pvr ||
+			     		glr === gvr && plr === pvr ){
+						
+						col.className = "bg-warning"
+						ptos_fecha+=1
+						//append_to_msjs(`Suma 1 ${row.cells[0].innerHTML}`)
+	
+			     	} else {
+						col.className = ""			     		
+			     	}
+			 	}
+			     
+			     if(row.cells.length-2 == j) j++
+			     r_ind++
+			     
+			   }
+			   ptos_participantes.push({participante: row.cells[0].innerHTML, puntos:ptos_fecha, plenos:plenos_fecha, goles:goles_fecha})
+			   r_ind=0  
+				
+			}
+
+			
+			//console.log("PTOS::SUMADOS", ptos_participantes)
+			tablar(ptos_participantes, "tabla_ptos")
+			
+			console.log(ptos_inicio_participantes)
+			let total_ptosp = [...ptos_participantes]
+			total_ptosp.map(p =>{
+				p.puntos += parseInt(ptos_inicio_participantes[p.participante].puntos)
+				p.plenos += parseInt(ptos_inicio_participantes[p.participante].plenos)
+				p.goles += parseInt(ptos_inicio_participantes[p.participante].goles)
+			})
+
+			const pts_pls_gls = {}
+			total_ptosp.forEach(p=>{
+			  pts_pls_gls[p.participante] = {"puntos":p.puntos.toString(),"plenos":p.plenos.toString(),"goles":p.goles.toString()}
+			})
+			console.log("PTOS::SUMADOS::", pts_pls_gls)
+			
+			console.log("TOtal ptos" ,total_ptosp)
+			tablar(total_ptosp, "tabla_ptos_total")
+			console.log(ptos_participantes)
+
+		}
+	</script>
+</head>
+<body>
+
+<div class="row">
+	<div class="col">
+  
+		<div class="container">
+		Participante:<br>
+		<input type="text" id="participante" readonly><br>
+		Ptos:
+		<input type="text" id="participante_ptos" maxlength="4" size="4" value="0">
+		Plenos:
+		<input type="text" id="participante_plenos" maxlength="4" size="4" value="0"><br>
+		Goles:
+		<input type="text" id="participante_goles" maxlength="4" size="4" value="0"><br>
+		
+
+		Prode:<br>
+		<textarea id="prode" readonly></textarea><br>
+		<button onclick="agregar_participante()" id="button_agregar_prode">Agregar</button><br>
+		</div>
+	
+	</div>
+	<div class="col">
+		reales:<br>
+		(para saltear un resultado pongan 9-9)<br>
+
+		<textarea id="reales"></textarea><br>
+		<button onclick="print_tab()" id="button_agregar_prode">Comparar</button><br><br>
+		<button onclick="export_json()" id="button_exp">Exportar</button><br>
+		<button onclick="import_json()" id="button_exp">Importar</button><input id="input_import" type="file">
+		
+		</div>
+	<div class="col">
+  		Partidos:<br>
+		<textarea id="partidos"></textarea><br>
+		<button onclick="get_partidos_put_in_table()" id="button_agregar_partidos">Agregar</button><br>
+
+		<div class="col">
+  			<div>Locales:
+				</div>
+  			<div>
+					<select name="locales" size="4" id="locales">
+	  				
+					</select>
+					<script>get_from_local_to_pop_select()</script>
+					
+			</div>
+			<div>
+				<button onclick="onclick_get_json_local_storage()" id="button_exp">Cargar Local</button>
+			</div>
+			<br>
+			
+			<div>
+				<input type="text" id="local_nombre" maxlength="16" size="16" placeholder="nombre para guardar"><br>
+			</div>
+			<div>
+				<button onclick="onclick_save_json_local_storage()" id="button_exp">Guardar Local</button>
+			</div>
+			<br>
+			<div>
+				<button onclick="get_json_local_storage('last')" id="button_exp">Cargar Último</button>
+			</div>
+
+	</div>
+
+		
+	</div>
+</div>
+
+<br>
+<br>
+<script>
+	change_color_table = (b) => {
+		console.log(b)
+		var mytable = document.getElementById("tabla");
+		mytable.className = "table table-" + b.className.split("-")[1]
+	}
+
+</script>
+Color:<button type="button" class="btn btn-primary" onclick="change_color_table(this)">Primary</button>
+<button type="button" class="btn btn-secondary" onclick="change_color_table(this)">Secondary</button>
+<button type="button" class="btn btn-success" onclick="change_color_table(this)">Success</button>
+<button type="button" class="btn btn-danger" onclick="change_color_table(this)">Danger</button>
+<button type="button" class="btn btn-warning" onclick="change_color_table(this)">Warning</button>
+<button type="button" class="btn btn-info" onclick="change_color_table(this)">Info</button>
+<button type="button" class="btn btn-light" onclick="change_color_table(this)">Light</button>
+<button type="button" class="btn btn-dark" onclick="change_color_table(this)">Dark</button>
+
+<br>
+<br>
+<table id="tabla" class="table table-dark">
+
+</table>
+
+<div id="tablafecha">
+	<div class="row">
+		<div class="col">
+			<table id="tabla_ptos" class="table table-dark">
+
+			</table>
+		</div>
+		<div class="col">
+			<table id="tabla_ptos_total" class="table table-dark">
+
+			</table>
+	
+		</div>
+	</div>
+</div>
+
+<div id="mensajes">
+
+</div>
+
+</body>
+</html>
