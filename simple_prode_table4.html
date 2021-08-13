@@ -186,6 +186,7 @@
 				alert("ponele un nombre salame")
 			} else {
 				save_json_local_storage(nombre_save)
+				get_from_local_to_pop_select()
 			}
 		}
 
@@ -198,6 +199,18 @@
 			load_json_str_in_table(jsonData)
 		}
 
+		const delete_json_local_storage = (name="test_prode") => {
+			let prodes_from_local = localStorage.getItem('prodes');
+			if(prodes_from_local){
+				if (window.confirm(`Estás seguro que querés eliminar ${name}???`)) {
+					prodes_from_local = JSON.parse(prodes_from_local)
+					delete prodes_from_local[name]
+					localStorage.setItem('prodes', JSON.stringify(prodes_from_local));
+				}
+			}
+		}
+
+
 		const onclick_get_json_local_storage = () => {
 			var nombre_load = document.getElementById("locales").value;
 			//console.log(nombre_load)
@@ -205,11 +218,18 @@
 		}
 		
 
+		const onclick_delete_json_local_storage = () => {
+			var nombre_delete = document.getElementById("locales").value;
+			delete_json_local_storage(nombre_delete)
+			get_from_local_to_pop_select()
+		}
+
 		const get_from_local_to_pop_select = () => {
 			let prodes_from_local = localStorage.getItem('prodes');
 			prodes_from_local = JSON.parse(prodes_from_local)
 			
 			let select_element = document.getElementById("locales")
+			select_element.innerHTML = ""
 			Object.keys(prodes_from_local).forEach(k => {
 				var option = document.createElement("option");
 				option.value = k;
@@ -474,6 +494,7 @@
 			</div>
 			<div>
 				<button onclick="onclick_get_json_local_storage()" id="button_exp">Cargar Local</button>
+				<button onclick="onclick_delete_json_local_storage()" id="button_exp">Eliminar Local</button>
 			</div>
 			<br>
 			
