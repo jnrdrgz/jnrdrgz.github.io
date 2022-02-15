@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	<script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 	<script>
 		var ptos_inicio_participantes = {}
 
@@ -614,6 +614,19 @@
 			}
 			d.appendChild(updateall_button)
 		}
+
+		download_img_table = () => {
+			html2canvas(document.getElementById("data_download")).then(canvas => {
+			    //document.body.appendChild(canvas)
+			    //canvas.toDataURL("image/png");
+
+			    var link = document.createElement('a');
+			  	link.download = 'tabla.png';
+			  	link.href = canvas.toDataURL("image/png")
+			  	link.click();
+			});
+		}
+		share = () => {}
 	</script>
 </head>
 <body>
@@ -712,6 +725,8 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 
 <br>
 <br>
+
+<div id="data_download">
 <table id="tabla" class="table table-dark">
 
 </table>
@@ -730,12 +745,15 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 	
 		</div>
 	</div>
+
 </div>
+</div>
+<button onclick="download_img_table()">DESCARGAR COMO IMAGEN</button>
+<button onclick="share()">COMPARTIR</button>
 
 <div id="ptos_tabla">
 	
 </div>
-
 <div id="mensajes">
 
 </div>
