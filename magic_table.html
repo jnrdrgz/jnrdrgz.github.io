@@ -610,8 +610,11 @@
 			if(url.includes("?")){
 				url =  decodeURI(document.URL).split("?")[0]
 			}
-			navigator.clipboard.writeText(`${url}?prode=${get_json()}`);
-			botones_export
+			try {
+			  navigator.clipboard.writeText(`${url}?prode=${get_json()}`);
+			} catch (error) {
+			  console.error(error);
+			}
 			var c = document.createElement("textarea");
 			c.value =`${url}?prode=${get_json()}`
 			c.onclick = () => {
