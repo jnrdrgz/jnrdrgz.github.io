@@ -611,7 +611,17 @@
 				url =  decodeURI(document.URL).split("?")[0]
 			}
 			navigator.clipboard.writeText(`${url}?prode=${get_json()}`);
-			alert("url copiado")
+			botones_export
+			var c = document.createElement("textarea");
+			c.value =`${url}?prode=${get_json()}`
+			c.onclick = () => {
+				c.select()
+			}
+			var v = document.createElement("p");
+			v.innerHTML = "para compartir copia esto y pasale a alguien"
+			document.getElementById("botones_export").appendChild(v)
+			document.getElementById("botones_export").appendChild(c)
+			//alert("url copiado")
 		}
 
 		upload_table_from_get_params = () => {
@@ -749,8 +759,10 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 
 </div>
 </div>
+<div id="botones_export">
 <button onclick="download_img_table()">DESCARGAR COMO IMAGEN</button>
 <button onclick="share()">COMPARTIR</button>
+</div>
 
 <div id="ptos_tabla">
 	
