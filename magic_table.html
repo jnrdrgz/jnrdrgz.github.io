@@ -61,16 +61,6 @@
 
 			names_arr = names_arr.map(name => {
 				let n = name[0].replace(":","").replace("]","").trim()
-				if(n == '+54 9 381 456-3246') return "LMigliazzo" 
-				if(n == '+54 9 351 287-0987') return "MMigliazzo"
-				if(n == '+54 9 381 467-9711') return "Ruesjas"
-				if(n == '+54 9 381 412-4879') return "Juri"
-				if(n == '+54 9 381 583-3132') return "Blanco"
-				if(n == '+54 9 381 665-6425') return "Salas"
-				if(n == '+54 9 381 456-3246') return "LMigliazzo"
-				if(n == '+54 9 381 200-3838') return "Naranjo"
-				if(n == '+54 9 381 345-4732') return "FMedina Raed"
-				if(n == '+54 9 381 575-9323') return "LMedina Raed"
 				return n
 			})
 			prodes_arr = prodes_arr.map(p => {
@@ -365,17 +355,6 @@
 				cell_plenos.innerHTML = ptos_p[i].plenos
 				let cell_goles = row.insertCell();
 				cell_goles.innerHTML = ptos_p[i].goles
-
-				/*{
-				  "Molina": 6,
-				  "Hasbani": 8,
-				  "Sanabria": 6,
-				  "Juri": 6,
-				  "Cazullo": 7,
-				  "Lisiak": 9,
-				  "Correa": 6,
-				  "Santa Cruz": 3
-				}*/
 			}
 		}
 
