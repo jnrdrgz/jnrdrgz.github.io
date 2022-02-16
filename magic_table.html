@@ -61,16 +61,16 @@
 
 			names_arr = names_arr.map(name => {
 				let n = name[0].replace(":","").replace("]","").trim()
-				//if(n == '+54 9 381 456-3246') return "LMigliazzo" 
-				//if(n == '+54 9 351 287-0987') return "MMigliazzo"
-				//if(n == '+54 9 381 467-9711') return "Ruesjas"
-				//if(n == '+54 9 381 412-4879') return "Juri"
-				//if(n == '+54 9 381 583-3132') return "Blanco"
-				//if(n == '+54 9 381 665-6425') return "Salas"
-				//if(n == '+54 9 381 456-3246') return "LMigliazzo"
-				//if(n == '+54 9 381 200-3838') return "Naranjo"
-				//if(n == '+54 9 381 345-4732') return "FMedina Raed"
-				//if(n == '+54 9 381 575-9323') return "LMedina Raed"
+				if(n == '+54 9 381 456-3246') return "LMigliazzo" 
+				if(n == '+54 9 351 287-0987') return "MMigliazzo"
+				if(n == '+54 9 381 467-9711') return "Ruesjas"
+				if(n == '+54 9 381 412-4879') return "Juri"
+				if(n == '+54 9 381 583-3132') return "Blanco"
+				if(n == '+54 9 381 665-6425') return "Salas"
+				if(n == '+54 9 381 456-3246') return "LMigliazzo"
+				if(n == '+54 9 381 200-3838') return "Naranjo"
+				if(n == '+54 9 381 345-4732') return "FMedina Raed"
+				if(n == '+54 9 381 575-9323') return "LMedina Raed"
 				return n
 			})
 			prodes_arr = prodes_arr.map(p => {
@@ -415,10 +415,10 @@
 			ptos_inicio_participantes = obj.puntos_inicales
 
 			console.log(obj.puntos_inicales)
-			document.getElementById("participante").readOnly = false;
-			document.getElementById("prode").readOnly = false;
-			document.getElementById("partidos").readOnly = true;
-			document.getElementById("button_agregar_partidos").disabled = true;
+			//document.getElementById("participante").readOnly = false;
+			//document.getElementById("prode").readOnly = false;
+			//document.getElementById("partidos").readOnly = true;
+			//document.getElementById("button_agregar_partidos").disabled = true;
 		}
 
 		const import_json = () => {
@@ -582,7 +582,7 @@
 				update_button.innerHTML = "Actualizar"
 				var update_f =  () => {
 					ptos_inicio_participantes[p].puntos = in_pts.value
-					ptos_inicio_participantes[p].plenos = in_pts.value
+					ptos_inicio_participantes[p].plenos = in_plns.value
 					ptos_inicio_participantes[p].goles = in_gols.value
 					//print_tab()
 					var new_name = in_part.value
@@ -626,7 +626,29 @@
 			  	link.click();
 			});
 		}
-		share = () => {}
+		share = () => {
+			let url = document.URL
+			if(url.includes("?")){
+				url =  decodeURI(document.URL).split("?")[0]
+			}
+			navigator.clipboard.writeText(`${url}?prode=${get_json()}`);
+			alert("url copiado")
+		}
+
+		upload_table_from_get_params = () => {
+			//console.log("___________test", document.URL.split("?"))
+			let params =  decodeURI(document.URL).split("?")
+			//console.log("pamras")
+			if(params.length > 1){
+				params = params[1]
+				params = params.split("=")
+				if(params.length > 1){
+					load_json_str_in_table(params[1])
+					update_ptos_inicio_participantes()
+				}
+			}	
+		}
+		
 	</script>
 </head>
 <body>
@@ -757,6 +779,6 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 <div id="mensajes">
 
 </div>
-
+<script>upload_table_from_get_params()</script>
 </body>
 </html>
