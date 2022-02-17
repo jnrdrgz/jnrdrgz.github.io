@@ -611,12 +611,12 @@
 				url =  decodeURI(document.URL).split("?")[0]
 			}
 			try {
-			  navigator.clipboard.writeText(`${url}?prode=${get_json()}`);
+			  navigator.clipboard.writeText(encodeURI(`${url}?prode=${get_json()}`));
 			} catch (error) {
 			  console.error(error);
 			}
 			var c = document.createElement("textarea");
-			c.value =`${url}?prode=${get_json()}`
+			c.value = encodeURI(`${url}?prode=${get_json()}`)
 			c.onclick = () => {
 				c.select()
 			}
