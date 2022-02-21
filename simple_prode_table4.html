@@ -49,13 +49,16 @@
 			document.getElementById("button_agregar_partidos").disabled = true;
 		}
 
+		function agregar_participante_bulk(){
 
-		function agregar_participante(){
-			var participante_nombre = document.getElementById("participante").value;
+		}
 
-			var participante_ptos = document.getElementById("participante_ptos").value;
-			var participante_plenos = document.getElementById("participante_plenos").value;
-			var participante_goles = document.getElementById("participante_goles").value;
+		function agregar_participante_params(participante_nombre, resultados){
+			//var participante_nombre = document.getElementById("participante").value;
+
+			var participante_ptos =   0;
+			var participante_plenos = 0;
+			var participante_goles =  0;
 
 			ptos_inicio_participantes[participante_nombre] = {
 				puntos:participante_ptos,
@@ -63,7 +66,8 @@
 				goles:participante_goles,
 			}
 
-			var resultados = document.getElementById("prode").value.replace(/\D/g, "").split("");
+			//var resultados = document.getElementById("prode").value.replace(/\D/g, "").split("");
+			//dobles con espcio .match(/\d\d?/g, "")
 
 			participante.value = "";
 			resultados.value = "";
@@ -93,6 +97,60 @@
 
 				let cell_del = row.insertCell();
 					cell_del.innerHTML = '<button onclick=delete_row('+row.rowIndex+')> X</button>';
+			} else {
+				alert("Participate o prode vacío")
+			}
+
+
+			print_tab()
+
+		}
+
+
+		function agregar_participante(){
+			var participante_nombre = document.getElementById("participante").value;
+
+			var participante_ptos = document.getElementById("participante_ptos").value;
+			var participante_plenos = document.getElementById("participante_plenos").value;
+			var participante_goles = document.getElementById("participante_goles").value;
+
+			ptos_inicio_participantes[participante_nombre] = {
+				puntos:participante_ptos,
+				plenos:participante_plenos,
+				goles:participante_goles,
+			}
+
+			var resultados = document.getElementById("prode").value.replace(/\D/g, "").split("");
+			//dobles con espcio .match(/\d\d?/g, "")
+
+			participante.value = "";
+
+			if(participante != "" && document.getElementById("prode").value != ""){
+				let table_ = document.getElementById("tabla");
+				let row = table_.insertRow(-1);
+				let cell_nombre = row.insertCell();
+				cell_nombre.innerHTML = participante_nombre;
+
+				let tiene_resultados_iguales = []
+				for(var i = 0; i<resultados.length; i += 2){
+					let cell = row.insertCell();
+					cell.innerHTML = resultados[i] + "-" + resultados[i+1];
+					tiene_resultados_iguales.push(cell.innerHTML)
+				}
+				var dic_equals = tiene_resultados_iguales.reduce(function(obj, b) {
+				  obj[b] = ++obj[b] || 1;
+				  return obj;
+				}, {});
+
+				Object.keys(dic_equals).forEach(k => {
+					if(dic_equals[k] > 6){
+						alert("¡¡¡¡¡¡¡Participate con más de 6 resultados iguales!!!!!!!")
+					}
+				})
+
+				let cell_del = row.insertCell();
+					cell_del.innerHTML = '<button onclick=delete_row('+row.rowIndex+')> X</button>';
+				document.getElementById("prode").value = "";
 			} else {
 				alert("Participate o prode vacío")
 			}
