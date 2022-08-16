@@ -13,6 +13,7 @@
 	<script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 	<script>
 		var ptos_inicio_participantes = {}
+		var last_ptos_ptos_participantes = {}
 
 		function get_partidos_put_in_table(){
 			var equipos = document.getElementById("partidos").value.split("\n").join("-").split(" ").join("").split("-");
@@ -43,10 +44,10 @@
 				cell.innerHTML = "<b>" + equipos[i] + "-" + equipos[i+1] + "</b>";
 			}
 
-			document.getElementById("participante").readOnly = false;
-			document.getElementById("prode").readOnly = false;
-			document.getElementById("partidos").readOnly = true;
-			document.getElementById("button_agregar_partidos").disabled = true;
+			//document.getElementById("participante").readOnly = false;
+			//document.getElementById("prode").readOnly = false;
+			//document.getElementById("partidos").readOnly = true;
+			//document.getElementById("button_agregar_partidos").disabled = true;
 		}
 
 		function agregar_participante_bulk(){
@@ -59,33 +60,39 @@
 			let names_arr = [...prodes_bulk.matchAll(regexp_names)];
 			let prodes_arr = [...prodes_bulk.matchAll(regexp_prodes)];
 
-			names_arr = names_arr.map(name => {
-				let n = name[0].replace(":","").replace("]","").trim()
-				return n
-			})
+			names_arr = names_arr.map(name => name)
+			
 			prodes_arr = prodes_arr.map(p => {
 				return p[0].substr(5.)
 			})
 
-			for(let i = 0; i<names_arr.length; i++){
-				agregar_participante_params(names_arr[i],prodes_arr[i])
+			if(Object.keys(ptos_inicio_participantes).length === 0){
+				for(let i = 0; i<names_arr.length; i++){
+					agregar_participante_params(names_arr[i],prodes_arr[i],true)
+				}
+			} else {
+				for(let i = 0; i<names_arr.length; i++){			
+					agregar_participante_params(names_arr[i],prodes_arr[i],false)
+				}
 			}
 			update_ptos_inicio_participantes()
 			//console.log(names_arr)
 			//console.log(prodes_arr)
 		}
 
-		function agregar_participante_params(participante_nombre, resultados_str){
+		function agregar_participante_params(participante_nombre, resultados_str, agregardecero){
 			//var participante_nombre = document.getElementById("participante").value;
 
-			var participante_ptos =   0;
-			var participante_plenos = 0;
-			var participante_goles =  0;
+			if(agregardecero){
+				var participante_ptos =   0;
+				var participante_plenos = 0;
+				var participante_goles =  0;
 
-			ptos_inicio_participantes[participante_nombre] = {
-				puntos:participante_ptos,
-				plenos:participante_plenos,
-				goles:participante_goles,
+				ptos_inicio_participantes[participante_nombre] = {
+					puntos:participante_ptos,
+					plenos:participante_plenos,
+					goles:participante_goles,
+				}				
 			}
 
 			var resultados = resultados_str.replace(/\D/g, "").split("");
@@ -113,7 +120,7 @@
 
 				Object.keys(dic_equals).forEach(k => {
 					if(dic_equals[k] > 6){
-						alert("¡¡¡¡¡¡¡Participate con más de 6 resultados iguales!!!!!!!")
+						alert(`¡¡¡¡¡¡¡Participate ${participante_nombre} con más de 6 resultados iguales!!!!!!!`)
 					}
 				})
 
@@ -167,7 +174,7 @@
 
 				Object.keys(dic_equals).forEach(k => {
 					if(dic_equals[k] > 6){
-						alert("¡¡¡¡¡¡¡Participate con más de 6 resultados iguales!!!!!!!")
+						alert(`¡¡¡¡¡¡¡Participate ${participante.value} con más de 6 resultados iguales!!!!!!!`)
 					}
 				})
 
@@ -232,7 +239,7 @@
 				prodes: exp_json, 
 				partidos: partidos, 
 				puntos_inicales: ptos_inicio_participantes,
-
+				reales: document.getElementById("reales").value,
 			});
 
 			return jsonData
@@ -345,6 +352,7 @@
 			for(var i = 0; i<ptos_p.length; i++){
 				let row = tabla.insertRow(-1);
 				if(i===0) row.className = "bg-success"
+				if(i===1) row.className = "bg-success"
 				if(i >= ptos_p.length-cantidad_desc) row.className = "bg-danger"
 				let cell_nombre = row.insertCell();
 				cell_nombre.innerHTML = ptos_p[i].participante;
@@ -391,6 +399,9 @@
 
 			console.log(obj)
 			cargar_part_from_json(obj)
+			if(obj.reales){
+				document.getElementById("reales").value = obj.reales
+			}
 			ptos_inicio_participantes = obj.puntos_inicales
 
 			console.log(obj.puntos_inicales)
@@ -497,6 +508,7 @@
 			
 			console.log(ptos_inicio_participantes)
 			let total_ptosp = [...ptos_participantes]
+			console.log(ptos_inicio_participantes)
 			total_ptosp.map(p =>{
 				p.puntos += parseInt(ptos_inicio_participantes[p.participante].puntos)
 				p.plenos += parseInt(ptos_inicio_participantes[p.participante].plenos)
@@ -511,7 +523,13 @@
 			
 			console.log("TOtal ptos" ,total_ptosp)
 			tablar(total_ptosp, "tabla_ptos_total")
-			console.log(ptos_participantes)
+			console.log("ptos_participantes", ptos_participantes)
+			let obj_parts = {}
+			total_ptosp.forEach(p => {
+				obj_parts[p.participante] = {puntos: p.puntos,plenos: p.plenos,goles: p.goles}
+			})
+			last_ptos_ptos_participantes = {...obj_parts}
+			navigator.clipboard.writeText(JSON.stringify(obj_parts));
 
 		}
 
@@ -520,6 +538,7 @@
 			let d = document.getElementById("ptos_tabla")
 			d.innerHTML = ""
 			let updates = []
+			console.log("lll", ptos_inicio_participantes)
 			Object.keys(ptos_inicio_participantes).forEach(p => {
 				var node = document.createElement("div");
 				node.innerHTML = p
@@ -575,7 +594,7 @@
 					}
 					console.log(ptos_inicio_participantes)
 					ptos_inicio_participantes[new_name] = {...bk}
-					console.log(ptos_inicio_participantes)
+					
 					print_tab()
 					update_ptos_inicio_participantes()
 				}
@@ -640,11 +659,40 @@
 				}
 			}	
 		}
+
+		copy_table = () => {
+			console.log("ptos_participantes", ptos_participantes)
+		}
 		
+		next_fecha = () => {
+			tabla = document.getElementById("tabla")
+			tabla1 = document.getElementById("tabla_ptos_total")
+			tabla2 = document.getElementById("tabla_ptos")
+			tabla.innerHTML = ""
+			tabla1.innerHTML = ""
+			tabla2.innerHTML = ""
+			ptos_inicio_participantes = {...last_ptos_ptos_participantes}
+			update_ptos_inicio_participantes()
+		}
+
+		get_reales_server = async () => {
+			console.log("reales")
+			let response  = await fetch('http://31.220.48.222:8001/scores/13')
+			let data = await response.json()
+			console.log(data.resultados)
+			let rstring = data.resultados.map(r => {
+				return `${r.local} ${r.goles_local}-${r.goles_visitante} ${r.visitante}`
+			})
+
+			//console.log(rstring.join("\n"))
+
+			document.getElementById("reales").value = rstring.join("\n")
+		}
+
 	</script>
 </head>
 <body>
-
+<button onclick="next_fecha()">Proxima fecha</button>
 <div class="row">
 	<div class="col">
   
@@ -674,9 +722,11 @@
 		(para saltear un resultado pongan 9-9)<br>
 
 		<textarea id="reales"></textarea><br>
-		<button onclick="print_tab()" id="button_agregar_prode">Comparar</button><br><br>
+		<button onclick="print_tab()" id="button_agregar_prode">Comparar</button><br><button onclick="get_reales_server()" id="reales_automaticos">Resultados Automáticos</button><br><br>
 		<button onclick="export_json()" id="button_exp">Exportar</button><br>
 		<button onclick="import_json()" id="button_exp">Importar</button><input id="input_import" type="file">
+		
+		<br><br>
 		
 		</div>
 	<div class="col">
@@ -756,7 +806,8 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 			<table id="tabla_ptos_total" class="table table-dark">
 
 			</table>
-	
+			<button type="button" class="btn btn-dark" onclick="copy_table()">Copiar Tabla Puntos</button>
+			
 		</div>
 	</div>
 
