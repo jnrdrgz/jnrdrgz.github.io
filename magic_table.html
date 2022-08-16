@@ -61,7 +61,7 @@
 			let prodes_arr = [...prodes_bulk.matchAll(regexp_prodes)];
 
 			names_arr = names_arr.map(name => name)
-			
+
 			prodes_arr = prodes_arr.map(p => {
 				return p[0].substr(5.)
 			})
@@ -677,7 +677,7 @@
 
 		get_reales_server = async () => {
 			console.log("reales")
-			let response  = await fetch('http://31.220.48.222:8001/scores/13')
+			let response  = await fetch('https://31.220.48.222:8001/scores/13')
 			let data = await response.json()
 			console.log(data.resultados)
 			let rstring = data.resultados.map(r => {
