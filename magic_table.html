@@ -677,7 +677,7 @@
 
 		get_reales_server = async () => {
 			console.log("reales")
-			let response  = await fetch('https://31.220.48.222:8001/scores/13')
+			let response  = await fetch('https://juanrodriguez.xyz:8001/scores/14')
 			let data = await response.json()
 			console.log(data.resultados)
 			let rstring = data.resultados.map(r => {
@@ -722,7 +722,7 @@
 		(para saltear un resultado pongan 9-9)<br>
 
 		<textarea id="reales"></textarea><br>
-		<button onclick="print_tab()" id="button_agregar_prode">Comparar</button><br><br><br>
+		<button onclick="print_tab()" id="button_agregar_prode">Comparar</button><br><button onclick="get_reales_server()" id="reales_automaticos">Resultados Automáticos</button><br><br>
 		<button onclick="export_json()" id="button_exp">Exportar</button><br>
 		<button onclick="import_json()" id="button_exp">Importar</button><input id="input_import" type="file">
 		
