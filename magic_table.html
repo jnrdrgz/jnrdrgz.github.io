@@ -62,6 +62,7 @@
 
 			names_arr = names_arr.map(name => {
 				let n = name[0].replace(":","").replace("]","").trim()
+				//if(n == `+54 9 381 456-3246`) return "PJuri" //LMigliazzo 
 				
 				return n
 			})
@@ -514,9 +515,9 @@
 			let total_ptosp = [...ptos_participantes]
 			console.log(ptos_inicio_participantes)
 			total_ptosp.map(p =>{
-				p.puntos += parseInt(ptos_inicio_participantes[p.participante].puntos)
-				p.plenos += parseInt(ptos_inicio_participantes[p.participante].plenos)
-				p.goles += parseInt(ptos_inicio_participantes[p.participante].goles)
+				p.puntos += ptos_inicio_participantes[p.participante] ? parseInt(ptos_inicio_participantes[p.participante].puntos) : 0
+				p.plenos += ptos_inicio_participantes[p.participante] ? parseInt(ptos_inicio_participantes[p.participante].plenos) : 0
+				p.goles += ptos_inicio_participantes[p.participante] ? parseInt(ptos_inicio_participantes[p.participante].goles) : 0
 			})
 
 			const pts_pls_gls = {}
