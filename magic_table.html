@@ -62,7 +62,6 @@
 
 			names_arr = names_arr.map(name => {
 				let n = name[0].replace(":","").replace("]","").trim()
-				//if(n == `+54 9 381 456-3246`) return "PJuri" //LMigliazzo 
 				
 				return n
 			})
@@ -683,7 +682,7 @@
 		}
 
 		get_reales_server = async () => {
-			let response  = await fetch('https://juanrodriguez.xyz:8001/scores/19')
+			let response  = await fetch('https://juanrodriguez.xyz:8001/scores/20')
 			let data = await response.json()
 			//console.log(data.resultados)
 			let rstring = data.resultados.map(r => {
