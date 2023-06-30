@@ -7,26 +7,57 @@
 	<script>
 		
 		let primeros = [
-			"Palmeiras",
-			"Argentinos",
-			"Mineiro",
-			"Fluminense",
 			"Racing",
 			"Internacional",
-			"Barcelona",
-			"Flamengo",
-		]
-		
-		let segundos = [
-			"Defensa",
-			"River",
-			"Sao Paulo",
-			"Cerro",
-			"Olimpia",
+			"Palmeiras",
+			"Fluminense",
+			"Independiente",
 			"Boca",
-			"Catolica",
-			"Velez",
+			"Paranaense",
+			"Olimpia",
 		]
+									
+		let segundos = [
+			"Flamengo",
+			"Nacional",
+			"Bolivar",
+			"River",
+			"Argentinos",
+			"Pereira",
+			"Mineiro",
+			"AtNacional",
+		]
+
+		let url = "https://www.promiedos.com.ar/images/"
+
+		let club_img_dic = {
+			Palmeiras: "18/629.png",
+			River: "18/18.png",
+			Flamengo: "18/590.png",
+			Estudiantes: "18/8.png",
+			Mineiro: "18/583.png",
+			Libertad: "18/719.png",
+			Colon: "18/7.png",
+			Boca: "18/6.png",
+			Tolima: "18/875.png",
+			Talleres: "18/52.png",
+			Fortaleza: "18/863.png",
+			Paranaense: "18/584.png",
+			Corinthians: "18/587.png",
+			Emelec: "18/717.png",
+			Velez: "18/21.png",
+			Cerro: "18/718.png",	
+			Racing: "18/17.png",
+			Internacional: "18/594.png",
+			Fluminense: "18/591.png",
+			Independiente: "18/737.png",
+			Olimpia: "18/575.png",
+			Nacional: "18/579.png",
+			Bolivar: "18/720.png",
+			Pereira: "18/1329.png",
+			Argentinos: "18/3.png",
+			AtNacional: "18/662.png",
+		}
 
 		const getPartido = () => {
 			//alert("holar")
@@ -38,12 +69,14 @@
 			let im1 = document.createElement("img");
 			im1.setAttribute("width", "33"); 
 			im1.setAttribute("height", "33"); 
-			im1.src="imgs/"+primeros[eq1].replaceAll(" ", "")+".png"
-			
+			//im1.src="imgs/"+primeros[eq1].replaceAll(" ", "")+".png"
+			im1.src=`${url}${club_img_dic[primeros[eq1]]}`
+
 			let im2 = document.createElement("img");
 			im2.setAttribute("width", "33"); 
 			im2.setAttribute("height", "33"); 
-			im2.src="imgs/"+segundos[eq2].replaceAll(" ", "")+".png"
+			//im2.src="imgs/"+segundos[eq2].replaceAll(" ", "")+".png"
+			im2.src=`${url}${club_img_dic[segundos[eq2]]}`
 			
 			d.innerHTML = primeros[eq1]+"-"+segundos[eq2]
 			ps.appendChild(im1);
@@ -69,27 +102,28 @@
 				}
 			}
 
-			primeros = [
-			"Palmeiras",
-			"Argentinos",
-			"Mineiro",
-			"Fluminense",
-			"Racing",
-			"Internacional",
-			"Barcelona",
-			"Flamengo",
-		]
 		
-		segundos = [
-			"Defensa",
-			"River",
-			"Sao Paulo",
-			"Cerro",
-			"Olimpia",
-			"Boca",
-			"Catolica",
-			"Velez",
-		]
+			primeros = [
+				"Palmeiras",
+				"Paranaense",
+				"Racing",
+				"Internacional",
+				"Fluminense",
+				"Independiente",
+				"Olimpia",
+				"Boca",
+			]
+										
+			segundos = [
+				"River",
+				"Flamengo",
+				"Mineiro",
+				"Nacional",
+				"Bolivar",
+				"Pereira",
+				"Argentinos",
+				"AtNacional",
+			]
 		}
 	</script>
 
