@@ -58,11 +58,12 @@
 			const regexp_prodes = /[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]:.+?\[/g;
 			
 			let names_arr = [...prodes_bulk.matchAll(regexp_names)];
+			console.log("names_arr", names_arr)
 			let prodes_arr = [...prodes_bulk.matchAll(regexp_prodes)];
+			console.log("prodes_arr", prodes_arr)
 
 			names_arr = names_arr.map(name => {
 				let n = name[0].replace(":","").replace("]","").trim()
-				
 				return n
 			})
 
@@ -331,6 +332,55 @@
 			})
 		}
 
+		const cambiar_color_tabla_ptos = (serie) => {
+			let tabla = document.getElementById("tabla_ptos_total");
+
+			for (var i = 0, row; row = tabla.rows[i]; i++) {
+				row.style.backgroundColor = ""
+				row.className = ""
+			}
+			for (var i = 0, row; row = tabla.rows[i]; i++) {
+				let trl = tabla.rows.length
+				let green = "bg-success"
+				let dark_green = "#0f5132"
+				let orange = "#fd7e14"
+				let yellow = "#ffc107"
+				let red = "bg-danger"
+				let pink = "#F5B6CD"
+
+				//let row = tabla.insertRow(-1);
+				if(serie == "seriea"){
+					if(i === 1) row.style.backgroundColor = dark_green
+					
+					if(i === 2) row.style.backgroundColor = pink
+					if(i === 3) row.style.backgroundColor = pink
+					if(i === 4) row.style.backgroundColor = pink
+					
+					if(i >= trl-3) row.style.backgroundColor = orange
+					if(i >= trl-2 || i >= trl-1) row.className = red
+				}
+				if(serie == "serieb"){
+					if(i === 1) row.style.backgroundColor = dark_green
+					if(i === 2) row.className = green
+					if(i === 3) row.className = row.style.backgroundColor = yellow
+					if(i >= trl-4) row.style.backgroundColor = orange
+					if(i >= trl-3 || i >= trl-2 || i >= trl-1) row.className = red
+				}
+				if(serie == "seriec"){
+					if(i === 1) row.style.backgroundColor = dark_green
+					if(i === 2 || i===3) row.className = green
+					if(i === 4) row.className = row.style.backgroundColor = yellow
+					if(i >= trl-4) row.style.backgroundColor = orange
+					if(i >= trl-3 || i >= trl-2 || i >= trl-1) row.className = red
+				}
+				if(serie == "seried"){
+					if(i === 1) row.style.backgroundColor = dark_green
+					if(i === 2 || i===3) row.className = green
+					if(i === 4) row.className = row.style.backgroundColor = yellow
+				}
+			}
+		} 
+
 		const tablar = (ptos_p, tabla_id) => {
 			let tabla = document.getElementById(tabla_id);
 			tabla.innerHTML = ""
@@ -355,9 +405,9 @@
 			let cantidad_desc = 2
 			for(var i = 0; i<ptos_p.length; i++){
 				let row = tabla.insertRow(-1);
-				if(i===0) row.className = "bg-success"
-				if(i===1) row.className = "bg-success"
-				if(i >= ptos_p.length-cantidad_desc) row.className = "bg-danger"
+				//if(i===0) row.className = "bg-success"
+				//if(i===1) row.className = "bg-success"
+				//if(i >= ptos_p.length-cantidad_desc) row.className = "bg-danger"
 				let cell_nombre = row.insertCell();
 				cell_nombre.innerHTML = ptos_p[i].participante;
 
@@ -533,9 +583,10 @@
 				obj_parts[p.participante] = {puntos: p.puntos,plenos: p.plenos,goles: p.goles}
 			})
 			last_ptos_ptos_participantes = {...obj_parts}
-			if(navigator?.clipboard){
-				navigator.clipboard.writeText(JSON.stringify(obj_parts));
-			}
+			onchangeselect_change_color_table_ptos()
+			//if(navigator?.clipboard){
+			//	navigator.clipboard.writeText(JSON.stringify(obj_parts));
+			//}
 
 		}
 
@@ -666,9 +717,9 @@
 			}	
 		}
 
-		copy_table = () => {
-			console.log("ptos_participantes", ptos_participantes)
-		}
+		//copy_table = () => {
+		//	console.log("ptos_participantes", ptos_participantes)
+		//}
 		
 		next_fecha = () => {
 			tabla = document.getElementById("tabla")
@@ -691,7 +742,11 @@
 
 			document.getElementById("reales").value = rstring.join("\n")
 		}
-
+		
+		onchangeselect_change_color_table_ptos = () => {
+			var color = document.getElementById("color_table").value
+			cambiar_color_tabla_ptos(color)
+		}
 	</script>
 </head>
 <body>
@@ -809,7 +864,16 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 			<table id="tabla_ptos_total" class="table table-dark">
 
 			</table>
-			<button type="button" class="btn btn-dark" onclick="copy_table()">Copiar Tabla Puntos</button>
+
+			<label for="pet-select">COLOR TABLA PTOS:</label>
+			<select name="color_table" id="color_table" onchange="onchangeselect_change_color_table_ptos()">
+			  <option value="">--Seleccionar un color--</option>
+			  <option value="seriea">Serie A</option>
+			  <option value="serieb">Serie B</option>
+			  <option value="seriec">Serie C</option>
+			  <option value="seried">Serie D</option>
+			</select>
+			
 			
 		</div>
 	</div>
