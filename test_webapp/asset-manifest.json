@@ -1,18 +1,20 @@
 {
   "files": {
-    "main.css": "/test_webapp/static/css/main.4bd2048d.css",
-    "main.js": "/test_webapp/static/js/main.d7009a79.js",
+    "main.css": "/test_webapp/static/css/main.01f64105.css",
+    "main.js": "/test_webapp/static/js/main.cfe3a76e.js",
     "static/js/787.a40bee17.chunk.js": "/test_webapp/static/js/787.a40bee17.chunk.js",
     "static/media/p1_bait.mp4": "/test_webapp/static/media/p1_bait.5cefb2c3beaa122a2097.mp4",
-    "static/media/m3_warby.mp4": "/test_webapp/static/media/m3_warby.ab3a24a5b3f1ad64b49b.mp4",
-    "static/media/p3_warby.mp4": "/test_webapp/static/media/p3_warby.4ad788a92709ff811143.mp4",
+    "static/media/p3_warby.mp4": "/test_webapp/static/media/p3_warby.af922257e10afb02b2b3.mp4",
+    "static/media/m3_warby.mp4": "/test_webapp/static/media/m3_warby.084e8301a51b806e6b5e.mp4",
     "static/media/m1_adidas.mp4": "/test_webapp/static/media/m1_adidas.525d0d4e5daa57f440b2.mp4",
-    "static/media/m4_loft.mp4": "/test_webapp/static/media/m4_loft.525d0d4e5daa57f440b2.mp4",
-    "static/media/p4_loft.mp4": "/test_webapp/static/media/p4_loft.525d0d4e5daa57f440b2.mp4",
+    "static/media/m4_loft.mp4": "/test_webapp/static/media/m4_loft.3e47d19af2f875c39e86.mp4",
+    "static/media/p4_loft.mp4": "/test_webapp/static/media/p4_loft.3e47d19af2f875c39e86.mp4",
     "static/media/m2_bait.mp4": "/test_webapp/static/media/m2_bait.a42cea864e2acd96b9bb.mp4",
     "static/media/p2_adidas.mp4": "/test_webapp/static/media/p2_adidas.c839cbdd161122e4a2fb.mp4",
+    "static/media/bg-congratz.png": "/test_webapp/static/media/bg-congratz.a35997e755ce7684f645.png",
     "static/media/AzbukaProBold.ttf": "/test_webapp/static/media/AzbukaProBold.6d21b024c78228db2522.ttf",
     "static/media/splash.jpg": "/test_webapp/static/media/splash.c5faed7a0815876695b0.jpg",
+    "static/media/bg-side-quest.png": "/test_webapp/static/media/bg-side-quest.6be03fe86e45bf337e78.png",
     "static/media/AzbukaPro.ttf": "/test_webapp/static/media/AzbukaPro.c3c620ab20edcb9a92b6.ttf",
     "static/media/AzbukaProMedium.ttf": "/test_webapp/static/media/AzbukaProMedium.8b4f1132a71672f35384.ttf",
     "static/media/TTMusselsBold.otf": "/test_webapp/static/media/TTMusselsBold.53a088e43fb6187674e7.otf",
@@ -26,12 +28,12 @@
     "static/media/logo-white.png": "/test_webapp/static/media/logo-white.98630d2038ad09e3c1e2.png",
     "static/media/spider-red.png": "/test_webapp/static/media/spider-red.e271568c9171c936dd00.png",
     "index.html": "/test_webapp/index.html",
-    "main.4bd2048d.css.map": "/test_webapp/static/css/main.4bd2048d.css.map",
-    "main.d7009a79.js.map": "/test_webapp/static/js/main.d7009a79.js.map",
+    "main.01f64105.css.map": "/test_webapp/static/css/main.01f64105.css.map",
+    "main.cfe3a76e.js.map": "/test_webapp/static/js/main.cfe3a76e.js.map",
     "787.a40bee17.chunk.js.map": "/test_webapp/static/js/787.a40bee17.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4bd2048d.css",
-    "static/js/main.d7009a79.js"
+    "static/css/main.01f64105.css",
+    "static/js/main.cfe3a76e.js"
   ]
 }
