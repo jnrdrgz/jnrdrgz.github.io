@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/test_webapp/static/css/main.15d1efca.css",
-    "main.js": "/test_webapp/static/js/main.b03e4e96.js",
+    "main.css": "/test_webapp/static/css/main.a3ad0b13.css",
+    "main.js": "/test_webapp/static/js/main.881da8ea.js",
     "static/js/787.a40bee17.chunk.js": "/test_webapp/static/js/787.a40bee17.chunk.js",
+    "static/media/m1_adidas.mp4": "/test_webapp/static/media/m1_adidas.99571a5a2b8ca80550ea.mp4",
+    "static/media/m2_bait.mp4": "/test_webapp/static/media/m2_bait.e715ac1d2d919c677b72.mp4",
+    "static/media/m4_loft.mp4": "/test_webapp/static/media/m4_loft.3d85f3c71a13bb246593.mp4",
+    "static/media/p4_loft.mp4": "/test_webapp/static/media/p4_loft.3d85f3c71a13bb246593.mp4",
+    "static/media/bg-modal-congratz-video.mp4": "/test_webapp/static/media/bg-modal-congratz-video.aaa8edcff1f56c57a8e1.mp4",
     "static/media/p1_bait.mp4": "/test_webapp/static/media/p1_bait.5cefb2c3beaa122a2097.mp4",
-    "static/media/p3_warby.mp4": "/test_webapp/static/media/p3_warby.af922257e10afb02b2b3.mp4",
-    "static/media/m3_warby.mp4": "/test_webapp/static/media/m3_warby.084e8301a51b806e6b5e.mp4",
-    "static/media/m1_adidas.mp4": "/test_webapp/static/media/m1_adidas.525d0d4e5daa57f440b2.mp4",
-    "static/media/m4_loft.mp4": "/test_webapp/static/media/m4_loft.3e47d19af2f875c39e86.mp4",
-    "static/media/p4_loft.mp4": "/test_webapp/static/media/p4_loft.3e47d19af2f875c39e86.mp4",
-    "static/media/m2_bait.mp4": "/test_webapp/static/media/m2_bait.a42cea864e2acd96b9bb.mp4",
     "static/media/p2_adidas.mp4": "/test_webapp/static/media/p2_adidas.c839cbdd161122e4a2fb.mp4",
-    "static/media/bg-modal-congratz.png": "/test_webapp/static/media/bg-modal-congratz.4b71b2a0d8a76bc3c4f7.png",
+    "static/media/p3_warby.mp4": "/test_webapp/static/media/p3_warby.46a7fe8f0380e32a53c7.mp4",
+    "static/media/m3_warby.mp4": "/test_webapp/static/media/m3_warby.f57ae4dd76104868d82a.mp4",
+    "static/media/splash.jpg": "/test_webapp/static/media/splash.8edadc0ac0e4b91573cb.jpg",
     "static/media/AzbukaProBold.ttf": "/test_webapp/static/media/AzbukaProBold.6d21b024c78228db2522.ttf",
-    "static/media/splash.jpg": "/test_webapp/static/media/splash.c5faed7a0815876695b0.jpg",
-    "static/media/bg-side-quest.png": "/test_webapp/static/media/bg-side-quest.6be03fe86e45bf337e78.png",
     "static/media/AzbukaPro.ttf": "/test_webapp/static/media/AzbukaPro.c3c620ab20edcb9a92b6.ttf",
     "static/media/AzbukaProMedium.ttf": "/test_webapp/static/media/AzbukaProMedium.8b4f1132a71672f35384.ttf",
+    "static/media/bg-side-quest.png": "/test_webapp/static/media/bg-side-quest.246dd80bad929e6f36f4.png",
+    "static/media/TTMusselsDemiBold.otf": "/test_webapp/static/media/TTMusselsDemiBold.bca7617acf8144d3a5ef.otf",
     "static/media/TTMusselsBold.otf": "/test_webapp/static/media/TTMusselsBold.53a088e43fb6187674e7.otf",
     "static/media/TTMusselsRegular.otf": "/test_webapp/static/media/TTMusselsRegular.ed15d59381e815a1afdb.otf",
     "static/media/spider-white.png": "/test_webapp/static/media/spider-white.2f34f97c0cb8447dadfc.png",
@@ -28,12 +29,12 @@
     "static/media/logo-white.png": "/test_webapp/static/media/logo-white.98630d2038ad09e3c1e2.png",
     "static/media/spider-red.png": "/test_webapp/static/media/spider-red.e271568c9171c936dd00.png",
     "index.html": "/test_webapp/index.html",
-    "main.15d1efca.css.map": "/test_webapp/static/css/main.15d1efca.css.map",
-    "main.b03e4e96.js.map": "/test_webapp/static/js/main.b03e4e96.js.map",
+    "main.a3ad0b13.css.map": "/test_webapp/static/css/main.a3ad0b13.css.map",
+    "main.881da8ea.js.map": "/test_webapp/static/js/main.881da8ea.js.map",
     "787.a40bee17.chunk.js.map": "/test_webapp/static/js/787.a40bee17.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.15d1efca.css",
-    "static/js/main.b03e4e96.js"
+    "static/css/main.a3ad0b13.css",
+    "static/js/main.881da8ea.js"
   ]
 }
