@@ -10,7 +10,8 @@
 	<meta charset="utf-8">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+	
 	<script>
 		var ptos_inicio_participantes = {}
 		var last_ptos_ptos_participantes = {}
@@ -64,6 +65,7 @@
 
 			names_arr = names_arr.map(name => {
 				let n = name[0].replace(":","").replace("]","").trim()
+				
 				return n
 			})
 
@@ -352,9 +354,9 @@
 				if(serie == "seriea"){
 					if(i === 1) row.style.backgroundColor = dark_green
 					
-					if(i === 2) row.style.backgroundColor = pink
-					if(i === 3) row.style.backgroundColor = pink
-					if(i === 4) row.style.backgroundColor = pink
+					//if(i === 2) row.style.backgroundColor = pink
+					//if(i === 3) row.style.backgroundColor = pink
+					//if(i === 4) row.style.backgroundColor = pink
 					
 					if(i >= trl-3) row.style.backgroundColor = orange
 					if(i >= trl-2 || i >= trl-1) row.className = red
@@ -583,6 +585,12 @@
 				obj_parts[p.participante] = {puntos: p.puntos,plenos: p.plenos,goles: p.goles}
 			})
 			last_ptos_ptos_participantes = {...obj_parts}
+
+			//acá
+
+			localStorage.setItem('last_ptos_participantes', JSON.stringify(last_ptos_ptos_participantes));
+			console.log(localStorage.getItem('last_ptos_participantes'))
+
 			onchangeselect_change_color_table_ptos()
 			//if(navigator?.clipboard){
 			//	navigator.clipboard.writeText(JSON.stringify(obj_parts));
@@ -892,5 +900,20 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 
 </div>
 <script>upload_table_from_get_params()</script>
+<script>
+	let auto_load_last_ptos = () => {
+		let last_ptos_participantes = localStorage.getItem('last_ptos_participantes');
+		if(!last_ptos_participantes){
+			last_ptos_participantes = null
+		} else{
+			last_ptos_participantes = JSON.parse(last_ptos_participantes)
+		}
+
+		if(last_ptos_participantes){
+			last_ptos_ptos_participantes = {...last_ptos_participantes}
+			next_fecha()
+		}		
+	}
+</script>
 </body>
 </html>
