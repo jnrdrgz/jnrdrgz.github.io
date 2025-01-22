@@ -180,8 +180,8 @@
 				}, {});
 
 				Object.keys(dic_equals).forEach(k => {
-					if(dic_equals[k] > 6){
-						alert(`¡¡¡¡¡¡¡Participate ${participante_nombre} con más de 6 resultados iguales!!!!!!!`)
+					if(dic_equals[k] > 7){
+						alert(`¡¡¡¡¡¡¡Participate ${participante_nombre} con más de 7 resultados iguales!!!!!!!`)
 					}
 				})
 
@@ -412,27 +412,31 @@
 					//if(i === 3) row.style.backgroundColor = pink
 					//if(i === 4) row.style.backgroundColor = pink
 					
-					if(i >= trl-3) row.style.backgroundColor = orange
+					//if(i >= trl-3) row.style.backgroundColor = orange
 					if(i >= trl-2 || i >= trl-1) row.className = red
 				}
 				if(serie == "serieb"){
 					if(i === 1) row.style.backgroundColor = dark_green
 					if(i === 2) row.className = green
-					if(i === 3) row.className = row.style.backgroundColor = yellow
-					if(i >= trl-4) row.style.backgroundColor = orange
+					//if(i === 3) row.className = row.style.backgroundColor = yellow
+					//if(i >= trl-4) row.style.backgroundColor = orange
 					if(i >= trl-3 || i >= trl-2 || i >= trl-1) row.className = red
 				}
 				if(serie == "seriec"){
 					if(i === 1) row.style.backgroundColor = dark_green
 					if(i === 2 || i===3) row.className = green
-					if(i === 4) row.className = row.style.backgroundColor = yellow
-					if(i >= trl-4) row.style.backgroundColor = orange
+					//if(i === 4) row.className = row.style.backgroundColor = yellow
+					//if(i >= trl-4) row.style.backgroundColor = orange
 					if(i >= trl-3 || i >= trl-2 || i >= trl-1) row.className = red
 				}
 				if(serie == "seried"){
 					if(i === 1) row.style.backgroundColor = dark_green
 					if(i === 2 || i===3) row.className = green
-					if(i === 4) row.className = row.style.backgroundColor = yellow
+					//if(i === 4) row.className = row.style.backgroundColor = yellow
+				}
+				if(serie == "generico"){
+					if(i === 1) row.style.backgroundColor = dark_green
+					
 				}
 			}
 		} 
@@ -934,6 +938,7 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 			  <option value="serieb">Serie B</option>
 			  <option value="seriec">Serie C</option>
 			  <option value="seried">Serie D</option>
+			  <option value="generico">Genérico</option>
 			</select>
 			
 			
