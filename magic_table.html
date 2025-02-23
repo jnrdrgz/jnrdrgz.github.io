@@ -438,6 +438,11 @@
 					if(i === 1) row.style.backgroundColor = dark_green
 					
 				}
+				if(serie == "PPN"){
+					if(i === 1) row.style.backgroundColor = dark_green
+					if(i >= trl-1) row.className = red
+					
+				}
 			}
 		} 
 
@@ -939,6 +944,8 @@ Color:<button type="button" class="btn btn-primary" onclick="change_color_table(
 			  <option value="seriec">Serie C</option>
 			  <option value="seried">Serie D</option>
 			  <option value="generico">Genérico</option>
+			  <option value="PPN">PPN</option>
+				
 			</select>
 			
 			
