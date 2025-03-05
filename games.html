@@ -1,145 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Juan Ignacio Rodríguez - Games</title>
-	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+	<title>Juan Ignacio Rodríguez</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.7">
 </head>
 <body>
-<header><strong>Juan Ignacio Rodríguez - Games</strong></header>
 
-<menu>
-<a id="now" href="index.html">Main</a>
-</menu>
+<main>
 
-<script>
-	_show = (imgs_id, this_button) => {
-		let x = document.getElementById(imgs_id);
-		if (x.style.display === "none") {
-			x.style.display = "block";
-			this_button.innerText = "Hide"
-		} else {
-			x.style.display = "none";
-			this_button.innerText = "Show"
-		}
-	}
-</script>
-
-<div style="margin:10px">
-
-<h3>I started my gamedev journey in 2018 making games with in C++ and SDL2 trying to make <a href="https://github.com/jnrdrgz/MZZGameEngine">my own game engine</a>... </h3>
-<br>
-<img src="https://github.com/jnrdrgz/MZZGameEngine/raw/master/Mzzgj/demo/demo1.webp"></img>
-<p>A little game that I made with my engine in C++ with SDL2 rendering</p>
-<br>
-<h3>...but with the time I started to understand the difficulty of such task, so I started to use the godot game engine to the point of have the pleasure to use it professionaly, here is a list of the games that I made in Godot both in game jams and my work: </h3>
-
-<!----------------------------------------->
-
-<h2 id="surfeandolasolas"> Surfeando las olas </h2>
-	<img width="640" height="480" src="imgs/surf.png">
-
-<p>A web promotional game with christmas theme.</p>
-
-<p>Engine: Godot</p>
-
-<h4>Images<button onclick="_show('images_xmas', this)">Hide</button></h4> 
-<div id="images_xmas">
-	<img width="480" height="320" src="imgs/surf1.png">
-	<img width="480" height="320" src="imgs/surf2.png">
-	<img width="200" height="320" src="imgs/surf3.png">
-	<img width="200" height="320" src="imgs/surf4.png">
+<div id="newheader"><h2>JUAN IGNACIO RODRÍGUEZ</h2></div>
+<div id="newmenu">
+	<a href="index.html">[Home]</a>
+	<a href="work.html">[Work]</a>
+	<a  href="projects.html">[Projects]</a>
+	<a  href="blog.html">[Blog]</a>
 </div>
 
-<h2><a href="https://lab9.co/navidad/">PLAY</a></h2>
-
-<!----------------------------------------->
-<!----------------------------------------->
-
-<h2 id="reindeerrelay">Reindeer Relay</h2>
-	<img width="640" height="480" src="imgs/reindeers.png">
-
-<p>A web and mobile focused promotional game with christmas theme for the North Carolina Education Lottery made in around a month. Played by around 25k users. For this game I also wrote all the backend for high scores and user promotion entry data with Python and FastAPI.</p>
-
-<p>Engine: Godot</p>
-
-<h4>Images<button onclick="_show('images_reindeer', this)">Hide</button></h4> 
-<div id="images_reindeer">
-	<img width="480" height="320" src="imgs/reindeers1.png">
-	<img width="480" height="320" src="imgs/reindeers2.png">
-	<img width="480" height="320" src="imgs/reindeers3.png">
-	<img width="480" height="320" src="imgs/reindeers4.png">
-	<img width="180" height="320" src="imgs/reindeers5.png">
-	<img width="180" height="320" src="imgs/reindeers6.png">
-	<img width="180" height="320" src="imgs/reindeers7.png">
-	<img width="180" height="320" src="imgs/reindeers8.png">
-</div>
+<section id="games">
+	
+	<div id="contact_nav"></div>
+	<section id="contact">
+		<h2>Games</h2>
+		<p>All these games were made in Godot:</p>
+		</br>
+		<p>Origen del mal (Global Game Jam 2023)<a href="https://v3.globalgamejam.org/2023/games/ra%C3%ADces-del-mal-8">[Link]</a></p>
+		<p>Kids to the rescue (Global Game Jam 2022)<a href="https://github.com/jnrdrgz/ggj-2022">[Link]</a></p>
+		<p>Bad drones (Global Game Jam 2021)<a href="https://github.com/jnrdrgz/BadDrones">[Link]</a></p>
+		<p>Reindeer Relay<a href="https://www.instagram.com/lab9.agencia/reel/DECxZPVhtm5/">[Link]</a></p>
+		<p>Navilab<a href="https://www.instagram.com/lab9.agencia/reel/C1AvWlsulr3">[Link]</a></p>
+		<p>Power Plant (Mini jam 73)<a href="https://github.com/jnrdrgz/PPlant">[Link]</a></p>
 
 
-<h2><a href="https://www.reindeerrelay.com/">PLAY</a></h2>
+	</section>
+</section>
 
-<!----------------------------------------->
+</main>
 
-<h2 id="kidstotherescue"> Kids to the rescue</h2>
-	<img width="640" height="480" src="https://ggj.s3.amazonaws.com/styles/game_sidebar__wide/featured_image/2022/01/332140/screenshot_2022-01-29_at_15-38-28_tittle_gif_imagen_gif_640_x_480_pixels.png">
-
-<p>A game for the 2022 global game jam. A game about two brothers, a lost cat and a haunted house. I worked with two 2D artists and a musician</p>
-
-<p>Engine: Godot</p>
-<p>Jam theme: duality</p>
-
-<h4>Images<button onclick="_show('images_kttr', this)">Hide</button></h4> 
-<div id="images_kttr">
-	<img width="480" height="320" src="https://ggj.s3.amazonaws.com/styles/game_content__wide/games/screenshots/2022/01/332140/screenshot_2022-01-30_at_23-41-41_captura_de_pantalla_309_png_imagen_png_1366_x_768_pixels_-_escala_83.png">
-	<img width="480" height="320" src="https://ggj.s3.amazonaws.com/styles/game_content__wide/games/screenshots/2022/01/332140/screenshot_2022-01-30_at_23-42-08_captura_de_pantalla_312_png_imagen_png_1366_x_768_pixels_-_escala_83.png">
-	<img width="480" height="320" src="https://ggj.s3.amazonaws.com/styles/game_content__wide/games/screenshots/2022/01/332140/screenshot_2022-01-30_at_23-42-42_captura_de_pantalla_315_png_imagen_png_1366_x_768_pixels_-_escala_83.png">
-	<img width="480" height="320" src="https://ggj.s3.amazonaws.com/styles/game_content__wide/games/screenshots/2022/01/332140/screenshot_2022-01-30_at_23-43-34_captura_de_pantalla_321_png_imagen_png_1366_x_768_pixels_-_escala_83.png">
-</div>
-
-<h4><a href="https://github.com/jnrdrgz/ggj-2022">Repo</a></h4>
-<h4><a href="https://globalgamejam.org/2022/games/kids-rescue-1">GGJ link</a></h4>
-<h2><a href="https://github.com/jnrdrgz/ggj-2022/raw/master/kids_to_the_rescue.rar">Download final version (exe)</a></h2>
-
-
-<h2 id="baddrones">Bad Drones</h2>
-	<img width="640" height="480" src="imgs/badrones.png">
-
-<p>Find your way to the lost engine trough 3 floors. A top down shooter made for the 2021 global game jam. I worked with a 2D artist</p>
-
-<p>Engine: Godot</p>
-<p>Jam theme: lost and found</p>
-
-<h4>Images<button onclick="_show('images_drones', this)">Hide</button></h4> 
-<div id="images_drones">
-	<img width="480" height="320" src="imgs/badrones1.gif">
-	<img width="480" height="320" src="imgs/badrones1.png">
-	<img width="480" height="320" src="imgs/badrones2.png">
-</div>
-
-<h4><a href="https://github.com/jnrdrgz/BadDrones">Repo</a></h4>
-<h4><a href="https://globalgamejam.org/2021/games/bad-drones-1?token=1612382318">GGJ link</a></h4>
-<h2><a href="https://github.com/jnrdrgz/BadDrones/raw/master/Release/BadDrones.rar">Download final version (exe)</a></h2>
-
-
-<h2 id="pplant">PPlant</h2>
-	<img width="480" height="320" src="imgs/pplant.png">
-<p>You have to prevent a meltdown in the power plant</p>
-
-<p>Engine: Godot</p>
-<p>Jam theme: Power</p>
-<p>Jam Limitation: Only 5 colors</p>
-
-<h4>Images<button onclick="_show('images_pplant', this)">Hide</button></h4> 
-<div id="images_pplant">
-	<img width="480" height="320" src="imgs/pplant.gif">
-	<img width="480" height="320" src="imgs/pplant1.gif">
-	<img width="480" height="320" src="imgs/pplant2.gif">
-</div>
-
-<h4><a href="https://github.com/jnrdrgz/PPlant">Repo</a></h4>
-<h4>Jam link: not finished on time :c</h4>
-<h2><a href="https://github.com/jnrdrgz/PPlant/raw/master/Release/pplant_0_1.rar">Download final version (exe)</a></h2>
-</div>
 </body>
 </html>
