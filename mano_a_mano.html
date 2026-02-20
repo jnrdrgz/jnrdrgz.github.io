@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pronósticos H2H</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen">
+  <div class="max-w-4xl mx-auto px-4 py-6">
+
+    <!-- Header -->
+    <div class="text-center mb-7">
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight mb-1">Pronósticos H2H</h1>
+      <p class="text-gray-500 text-xs sm:text-sm">3 pts por resultado exacto &nbsp;·&nbsp; 1 pt por ganador/empate correcto</p>
+    </div>
+
+    <!-- Real Results -->
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 sm:p-5 mb-5">
+      <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">Resultados Reales</h2>
+      <textarea
+        id="realResults"
+        class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 font-mono text-xs sm:text-sm text-gray-100 placeholder-gray-600 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        rows="5"
+        placeholder="River 3-1 Boca&#10;Banfield 2-0 Velez&#10;Lanus 1-1 Chacarita"
+      ></textarea>
+    </div>
+
+    <!-- Duels -->
+    <div id="duelsContainer" class="space-y-4 mb-5"></div>
+
+    <!-- Action buttons -->
+    <div class="flex gap-3 mb-8">
+      <button onclick="addDuel()"
+        class="flex-1 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 rounded-xl py-3 text-sm font-semibold transition-colors">
+        + Agregar Duelo
+      </button>
+      <button onclick="compare()"
+        class="flex-1 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 rounded-xl py-3 text-sm font-semibold transition-colors">
+        Comparar ▶
+      </button>
+    </div>
+
+    <!-- Results -->
+    <div id="resultsContainer" class="space-y-4"></div>
+
+  </div>
+
+  <script>
+    let duelIdCounter = 0;
+
+    function addDuel() {
+      const id = ++duelIdCounter;
+      const container = document.getElementById('duelsContainer');
+
+      const div = document.createElement('div');
+      div.id = `duel-${id}`;
+      div.className = 'bg-gray-900 border border-gray-800 rounded-2xl p-4 sm:p-5';
+      div.innerHTML = `
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Duelo #${id}</span>
+          <button onclick="removeDuel(${id})" class="text-gray-600 hover:text-red-400 text-xs transition-colors">✕ Eliminar</button>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-2 min-w-0">
+            <input type="text" id="p1name-${id}" placeholder="Persona 1"
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm font-semibold placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <textarea id="p1pred-${id}" rows="5"
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 font-mono text-xs text-gray-100 placeholder-gray-600 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="River 3-1 Boca&#10;Banfield 2-0 Velez"></textarea>
+          </div>
+          <div class="space-y-2 min-w-0">
+            <input type="text" id="p2name-${id}" placeholder="Persona 2"
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm font-semibold placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <textarea id="p2pred-${id}" rows="5"
+              class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 font-mono text-xs text-gray-100 placeholder-gray-600 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="River 2-1 Boca&#10;Banfield 1-0 Velez"></textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+    }
+
+    function removeDuel(id) {
+      const el = document.getElementById(`duel-${id}`);
+      if (el) el.remove();
+    }
+
+    function parseMatch(line) {
+      const trimmed = line.trim();
+      if (!trimmed) return null;
+      // Matches: "Team Name 2-1 Other Team"
+      const m = trimmed.match(/^(.+?)\s+(\d+)-(\d+)\s+(.+)$/);
+      if (!m) return null;
+      return {
+        raw: trimmed,
+        home: m[1].trim().toLowerCase(),
+        homeScore: parseInt(m[2]),
+        awayScore: parseInt(m[3]),
+        away: m[4].trim().toLowerCase()
+      };
+    }
+
+    function getOutcome(h, a) {
+      return h > a ? 'H' : a > h ? 'A' : 'D';
+    }
+
+    function calcPoints(pred, realResults) {
+      if (!pred) return { points: 0, found: false };
+
+      let real = null, swapped = false;
+
+      for (const r of realResults) {
+        if (r.home === pred.home && r.away === pred.away) {
+          real = r; swapped = false; break;
+        }
+        if (r.home === pred.away && r.away === pred.home) {
+          real = r; swapped = true; break;
+        }
+      }
+
+      if (!real) return { points: 0, found: false };
+
+      // Normalize to pred's perspective
+      const realH = swapped ? real.awayScore : real.homeScore;
+      const realA = swapped ? real.homeScore : real.awayScore;
+
+      if (pred.homeScore === realH && pred.awayScore === realA) return { points: 3, found: true };
+      if (getOutcome(pred.homeScore, pred.awayScore) === getOutcome(realH, realA)) return { points: 1, found: true };
+      return { points: 0, found: true };
+    }
+
+    function badge(points, found) {
+      if (!found) return '<span class="text-gray-600 text-xs" title="Sin resultado real">?</span>';
+      if (points === 3) return '<span class="shrink-0 inline-block bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">+3</span>';
+      if (points === 1) return '<span class="shrink-0 inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-0.5 rounded-full">+1</span>';
+      return '<span class="shrink-0 inline-block bg-gray-700 text-gray-400 text-xs font-bold px-2 py-0.5 rounded-full">0</span>';
+    }
+
+    function renderRows(rows) {
+      if (!rows.length) return '<p class="text-gray-600 text-xs text-center py-4">Sin pronósticos</p>';
+      return rows.map(({ pred, points, found }) => `
+        <div class="flex items-center justify-between gap-1 py-1.5 border-b border-gray-800 last:border-0">
+          <span class="font-mono text-xs text-gray-300 truncate">${pred.raw}</span>
+          ${badge(points, found)}
+        </div>
+      `).join('');
+    }
+
+    function compare() {
+      const realText = document.getElementById('realResults').value;
+      const realResults = realText.split('\n').map(parseMatch).filter(Boolean);
+
+      const resultsContainer = document.getElementById('resultsContainer');
+      resultsContainer.innerHTML = '';
+
+      const duelEls = [...document.querySelectorAll('[id^="duel-"]')];
+      if (!duelEls.length) {
+        resultsContainer.innerHTML = '<p class="text-center text-gray-500 text-sm py-4">No hay duelos agregados.</p>';
+        return;
+      }
+
+      duelEls.forEach(el => {
+        const id = el.id.replace('duel-', '');
+        const p1name = document.getElementById(`p1name-${id}`).value.trim() || 'Persona 1';
+        const p2name = document.getElementById(`p2name-${id}`).value.trim() || 'Persona 2';
+
+        const p1preds = document.getElementById(`p1pred-${id}`).value.split('\n').map(parseMatch).filter(Boolean);
+        const p2preds = document.getElementById(`p2pred-${id}`).value.split('\n').map(parseMatch).filter(Boolean);
+
+        let p1total = 0, p2total = 0;
+
+        const p1rows = p1preds.map(pred => {
+          const { points, found } = calcPoints(pred, realResults);
+          p1total += points;
+          return { pred, points, found };
+        });
+
+        const p2rows = p2preds.map(pred => {
+          const { points, found } = calcPoints(pred, realResults);
+          p2total += points;
+          return { pred, points, found };
+        });
+
+        let p1cls, p2cls, banner;
+        if (p1total > p2total) {
+          p1cls = 'text-green-400';
+          p2cls = 'text-red-400';
+          banner = `<div class="text-center bg-green-950 border border-green-800 rounded-xl py-2 mb-4 text-green-400 font-bold text-sm">🏆 ¡Gana ${p1name}!</div>`;
+        } else if (p2total > p1total) {
+          p1cls = 'text-red-400';
+          p2cls = 'text-green-400';
+          banner = `<div class="text-center bg-green-950 border border-green-800 rounded-xl py-2 mb-4 text-green-400 font-bold text-sm">🏆 ¡Gana ${p2name}!</div>`;
+        } else {
+          p1cls = 'text-yellow-400';
+          p2cls = 'text-yellow-400';
+          banner = `<div class="text-center bg-yellow-950 border border-yellow-800 rounded-xl py-2 mb-4 text-yellow-400 font-bold text-sm">🤝 ¡Empate!</div>`;
+        }
+
+        const resultEl = document.createElement('div');
+        resultEl.className = 'bg-gray-900 border border-gray-800 rounded-2xl p-4 sm:p-5';
+        resultEl.innerHTML = `
+          ${banner}
+          <div class="grid grid-cols-2 gap-3">
+            <div class="min-w-0">
+              <div class="flex justify-between items-baseline mb-3 gap-1">
+                <span class="font-bold text-sm truncate ${p1cls}">${p1name}</span>
+                <span class="text-xl font-black shrink-0 ${p1cls}">${p1total}<span class="text-xs font-normal text-gray-500 ml-0.5">pts</span></span>
+              </div>
+              ${renderRows(p1rows)}
+            </div>
+            <div class="min-w-0">
+              <div class="flex justify-between items-baseline mb-3 gap-1">
+                <span class="font-bold text-sm truncate ${p2cls}">${p2name}</span>
+                <span class="text-xl font-black shrink-0 ${p2cls}">${p2total}<span class="text-xs font-normal text-gray-500 ml-0.5">pts</span></span>
+              </div>
+              ${renderRows(p2rows)}
+            </div>
+          </div>
+        `;
+
+        resultsContainer.appendChild(resultEl);
+      });
+
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Start with one duel
+    addDuel();
+  </script>
+</body>
+</html>
