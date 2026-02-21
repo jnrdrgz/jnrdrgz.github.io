@@ -10,9 +10,15 @@
   <div class="max-w-4xl mx-auto px-4 py-6">
 
     <!-- Header -->
-    <div class="text-center mb-7">
-      <h1 class="text-3xl sm:text-4xl font-black tracking-tight mb-1">Pronósticos H2H</h1>
-      <p class="text-gray-500 text-xs sm:text-sm">3 pts por resultado exacto &nbsp;·&nbsp; 1 pt por ganador/empate correcto</p>
+    <div class="flex items-start justify-between mb-7">
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-black tracking-tight mb-1">Pronósticos H2H</h1>
+        <p class="text-gray-500 text-xs sm:text-sm">3 pts por resultado exacto &nbsp;·&nbsp; 1 pt por ganador/empate correcto</p>
+      </div>
+      <button onclick="fullReset()"
+        class="shrink-0 ml-4 mt-1 bg-red-950 hover:bg-red-900 border border-red-800 text-red-400 hover:text-red-300 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors">
+        ↺ Resetear todo
+      </button>
     </div>
 
     <!-- Real Results -->
@@ -49,7 +55,54 @@
   <script>
     let duelIdCounter = 0;
 
-    function addDuel() {
+    // ─── LocalStorage ─────────────────────────────────────────────────────────
+
+    function saveState() {
+      const duels = [];
+      document.querySelectorAll('[id^="duel-"]').forEach(el => {
+        const id = el.id.replace('duel-', '');
+        duels.push({
+          p1name: document.getElementById(`p1name-${id}`)?.value || '',
+          p2name: document.getElementById(`p2name-${id}`)?.value || '',
+          p1pred: document.getElementById(`p1pred-${id}`)?.value || '',
+          p2pred: document.getElementById(`p2pred-${id}`)?.value || ''
+        });
+      });
+      localStorage.setItem('h2h_state', JSON.stringify({
+        realResults: document.getElementById('realResults').value,
+        duels
+      }));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem('h2h_state');
+      if (!saved) { addDuel(); return; }
+      try {
+        const state = JSON.parse(saved);
+        document.getElementById('realResults').value = state.realResults || '';
+        if (state.duels && state.duels.length > 0) {
+          state.duels.forEach(data => addDuel(data));
+        } else {
+          addDuel();
+        }
+      } catch (e) {
+        addDuel();
+      }
+    }
+
+    function fullReset() {
+      if (!confirm('¿Estás seguro que querés borrar todo?\nEsta acción no se puede deshacer.')) return;
+      localStorage.removeItem('h2h_state');
+      document.getElementById('realResults').value = '';
+      document.getElementById('duelsContainer').innerHTML = '';
+      document.getElementById('resultsContainer').innerHTML = '';
+      duelIdCounter = 0;
+      addDuel();
+    }
+
+    // ─── Duel Management ──────────────────────────────────────────────────────
+
+    function addDuel(data = {}) {
       const id = ++duelIdCounter;
       const container = document.getElementById('duelsContainer');
 
@@ -79,17 +132,29 @@
         </div>
       `;
       container.appendChild(div);
+
+      // Restore saved values
+      if (data.p1name) document.getElementById(`p1name-${id}`).value = data.p1name;
+      if (data.p2name) document.getElementById(`p2name-${id}`).value = data.p2name;
+      if (data.p1pred) document.getElementById(`p1pred-${id}`).value = data.p1pred;
+      if (data.p2pred) document.getElementById(`p2pred-${id}`).value = data.p2pred;
+
+      // Auto-save on any change
+      ['p1name', 'p2name', 'p1pred', 'p2pred'].forEach(field => {
+        document.getElementById(`${field}-${id}`).addEventListener('input', saveState);
+      });
     }
 
     function removeDuel(id) {
       const el = document.getElementById(`duel-${id}`);
-      if (el) el.remove();
+      if (el) { el.remove(); saveState(); }
     }
+
+    // ─── Parsing & Scoring ────────────────────────────────────────────────────
 
     function parseMatch(line) {
       const trimmed = line.trim();
       if (!trimmed) return null;
-      // Matches: "Team Name 2-1 Other Team"
       const m = trimmed.match(/^(.+?)\s+(\d+)-(\d+)\s+(.+)$/);
       if (!m) return null;
       return {
@@ -105,20 +170,37 @@
       return h > a ? 'H' : a > h ? 'A' : 'D';
     }
 
-    function calcPoints(pred, realResults) {
+    // Returns a boolean array: true for each prediction that is the 8th+
+    // occurrence of its exact score (1-0 and 0-1 are different).
+    // The first 7 occurrences of any score are NOT flagged.
+    function markDuplicates(predictions) {
+      const counts = {};
+      return predictions.map(p => {
+        if (!p) return false;
+        const key = `${p.homeScore}-${p.awayScore}`;
+        counts[key] = (counts[key] || 0) + 1;
+        return counts[key] > 7;
+      });
+    }
+
+    function calcPoints(pred, realResults, isFlagged) {
       if (!pred) return { points: 0, found: false };
 
-      let real = null, swapped = false;
-
-      for (const r of realResults) {
-        if (r.home === pred.home && r.away === pred.away) {
-          real = r; swapped = false; break;
-        }
-        if (r.home === pred.away && r.away === pred.home) {
-          real = r; swapped = true; break;
-        }
+      // 9-9 means user didn't send this result → 0 pts, show as "—"
+      if (pred.homeScore === 9 && pred.awayScore === 9) {
+        return { points: 0, found: true, noSend: true };
       }
 
+      // 8th+ occurrence of the same score → flagged, 0 pts
+      if (isFlagged) {
+        return { points: 0, found: true, flagged: true };
+      }
+
+      let real = null, swapped = false;
+      for (const r of realResults) {
+        if (r.home === pred.home && r.away === pred.away) { real = r; swapped = false; break; }
+        if (r.home === pred.away && r.away === pred.home) { real = r; swapped = true; break; }
+      }
       if (!real) return { points: 0, found: false };
 
       // Normalize to pred's perspective
@@ -130,8 +212,10 @@
       return { points: 0, found: true };
     }
 
-    function badge(points, found) {
-      if (!found) return '<span class="text-gray-600 text-xs" title="Sin resultado real">?</span>';
+    function badge(points, found, flagged, noSend) {
+      if (noSend)  return '<span class="shrink-0 text-gray-600 text-xs font-bold" title="No enviado (9-9)">—</span>';
+      if (flagged) return '<span class="shrink-0 inline-block bg-orange-950 border border-orange-700 text-orange-400 text-xs font-bold px-1.5 py-0.5 rounded" title="Resultado repetido más de 7 veces">!!</span>';
+      if (!found)  return '<span class="shrink-0 text-gray-600 text-xs" title="Sin resultado real">?</span>';
       if (points === 3) return '<span class="shrink-0 inline-block bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">+3</span>';
       if (points === 1) return '<span class="shrink-0 inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-0.5 rounded-full">+1</span>';
       return '<span class="shrink-0 inline-block bg-gray-700 text-gray-400 text-xs font-bold px-2 py-0.5 rounded-full">0</span>';
@@ -139,13 +223,15 @@
 
     function renderRows(rows) {
       if (!rows.length) return '<p class="text-gray-600 text-xs text-center py-4">Sin pronósticos</p>';
-      return rows.map(({ pred, points, found }) => `
+      return rows.map(({ pred, points, found, flagged, noSend }) => `
         <div class="flex items-center justify-between gap-1 py-1.5 border-b border-gray-800 last:border-0">
           <span class="font-mono text-xs text-gray-300 truncate">${pred.raw}</span>
-          ${badge(points, found)}
+          ${badge(points, found, flagged, noSend)}
         </div>
       `).join('');
     }
+
+    // ─── Compare ──────────────────────────────────────────────────────────────
 
     function compare() {
       const realText = document.getElementById('realResults').value;
@@ -168,18 +254,21 @@
         const p1preds = document.getElementById(`p1pred-${id}`).value.split('\n').map(parseMatch).filter(Boolean);
         const p2preds = document.getElementById(`p2pred-${id}`).value.split('\n').map(parseMatch).filter(Boolean);
 
+        const p1flagged = markDuplicates(p1preds);
+        const p2flagged = markDuplicates(p2preds);
+
         let p1total = 0, p2total = 0;
 
-        const p1rows = p1preds.map(pred => {
-          const { points, found } = calcPoints(pred, realResults);
-          p1total += points;
-          return { pred, points, found };
+        const p1rows = p1preds.map((pred, i) => {
+          const result = calcPoints(pred, realResults, p1flagged[i]);
+          p1total += result.points;
+          return { pred, ...result };
         });
 
-        const p2rows = p2preds.map(pred => {
-          const { points, found } = calcPoints(pred, realResults);
-          p2total += points;
-          return { pred, points, found };
+        const p2rows = p2preds.map((pred, i) => {
+          const result = calcPoints(pred, realResults, p2flagged[i]);
+          p2total += result.points;
+          return { pred, ...result };
         });
 
         let p1cls, p2cls, banner;
@@ -225,8 +314,10 @@
       resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Start with one duel
-    addDuel();
+    // ─── Init ─────────────────────────────────────────────────────────────────
+
+    document.getElementById('realResults').addEventListener('input', saveState);
+    loadState();
   </script>
 </body>
 </html>
