@@ -155,7 +155,7 @@
     function parseMatch(line) {
       const trimmed = line.trim();
       if (!trimmed) return null;
-      const m = trimmed.match(/^(.+?)\s+(\d+)-(\d+)\s+(.+)$/);
+      const m = trimmed.match(/^(.+?)\s+(\d+)\s*-\s*(\d+)\s+(.+)$/);
       if (!m) return null;
       return {
         raw: trimmed,
